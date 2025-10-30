@@ -42,7 +42,25 @@
 <h3>Push to repo</h3>
 <p>git push repo-reference</p>
 
+<h1>Tutorial de Setup do MariaDB</h1>
 
+<h3>Install MariaDB</h3>
+<p>sudo apt install mariadb-server</p>
+
+<h3>Acessar mariadb server</h3>
+<p>sudo mariadb</p>
+
+<h3>Configurar acesso</h3>
+<h4>(apos o sudo mariadb)</h4>
+<p>config access</p>
+
+<h3>Remover privilegios</h3>
+<h4>(apos o sudo mariadb)</h4>
+<p>flush privileges</p>
+
+<h3>Acesso sem sudo</h3>
+<h4>(apos o sudo mariadb)</h4>
+<p>mariadb -u root -p (enter password when prompted)</p>
 
 </body>
 </html>
