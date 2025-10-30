@@ -2,18 +2,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-<style>
-body {
-background-color:powderblue;
-font-family: courier;
-}
 
-</style>
 </head>
 <body>
 
 <h1>Tutorial de Setup do git</h1>
-<img src="pic_trulli.jpg" alt="Italian Trulli">
+
 <h3>Connection to git</h3>
 <p>git init</p>
 
