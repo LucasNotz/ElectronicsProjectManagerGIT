@@ -1,40 +1,55 @@
 # ElectronicsProjectManagerGIT
-git init -> allows for git connection
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+body {
+background-color:powderblue;
+font-family: courier;
+}
 
--> defines who is using this git connection
-git config --global user.name "insert user" 
-git config --global user.email "insert email"
+</style>
+</head>
+<body>
 
--> origin becomes the repo references, so push origin means push to this repo
-git remote add origin https://github.com/your account/your repo.git
+<h1>Tutorial de Setup do git</h1>
+<img src="pic_trulli.jpg" alt="Italian Trulli">
+<h3>Connection to git</h3>
+<p>git init</p>
 
-->checks
-git remote -v
+<h3>Defines who is using this git connection</h3>
+<p>git config --global user.name "insert user"</p>
+<p>git config --global user.email "insert email"</p>
 
-->access token
-git remote set-url origin https://username:token@github.com/username/repository.git
+<h3>Origin becomes the repo references, so push origin means push to this repo git </h3>
+<p>remote add origin https://github.com/your account/your repo.git</p>
 
-->pull everything from repo
-git fetch origin
+<h3>Remote connection check</h3>
+<p>git remote -v</p>
 
-->check branch
-git branch --list
+<h3>Pull everything from repo</h3>
+<p>git fetch origin</p>
 
--> changes from master
-git switch branch name
+<h3>Check branch</h3>
+<p>git branch --list</p>
 
--> get up to date
-git pull origin
+<h3>Change branch</h3>
+<p>gith switch branch-name</p>
 
-->check all actions in repo
-git log
+<h3>Check all actions in repo</h3>
+<p>git log</p>
 
-->stage modifications
-git add .
+<h3>Stage changes</h3>
+<p>git add .</p>
 
-->make commit
-git commit -m "message"
+<h3>Make commit</h3>
+<p>git commit -m "commit-message"</p>
 
-->push to repo (in branch that is being used) <br>
-git push repo
+<h3>Push to repo</h3>
+<p>git push repo-reference</p>
+
+
+
+</body>
+</html>
 
