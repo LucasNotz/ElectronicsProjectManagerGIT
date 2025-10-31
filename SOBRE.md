@@ -5,6 +5,7 @@
 <p> Terminar Logica GUI/DAO/NEGOCIO </p>
 <h2> Banco de Dados </h2>
 <p> Colocar comandos sql no git </p>
+<p> Criar novo usuario, grant permissoes e trocar la no Databese class </p>
 <p> Colocar indexes extras </p>
 <h2> Documentação </h2>
 <p> Passar/formalizar documantação que está em papel </p>
