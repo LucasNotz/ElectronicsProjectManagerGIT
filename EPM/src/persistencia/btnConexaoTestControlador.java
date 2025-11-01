@@ -24,19 +24,14 @@ import login.Login;
  *  
  *  	try desconectar
  *  
- *  conectarTest()
- *  
- *  desconectarTest()
+ *  	reslutados
  *  	
- *  !static variables are constant through the whole class
- *  !aka there is no need to instance the class to access it
- *  !eu estou usando ela para poder testar a connexao sem ter que instancia essa classe
+ *  		proxima tela (se sucesso)
  */
 
 public class btnConexaoTestControlador implements ActionListener {
 	
 	//propriedades da classe
-	private boolean connectPermission = false;
 	private JFrame fBanco = null;
 	private JLabel lblConn = null;
 	private JLabel lblConnStatus = null;
@@ -46,6 +41,7 @@ public class btnConexaoTestControlador implements ActionListener {
 	private JTextField txtUser = null;
 	private JTextField txtPassword = null;
 	
+	//variavel de controle
 	private int result = 0;
 	
 	//propriedade da classe connection testing
@@ -53,8 +49,7 @@ public class btnConexaoTestControlador implements ActionListener {
 	
 	//construtor
 	
-	public btnConexaoTestControlador(boolean connectPermission, JFrame fBanco, JLabel lblConnStatus, JLabel lblConn, JTextField txtAddress, JTextField txtPort, JTextField txtBanco, JTextField txtUser, JTextField txtPassword) {
-		this.connectPermission = connectPermission;
+	public btnConexaoTestControlador(JFrame fBanco, JLabel lblConnStatus, JLabel lblConn, JTextField txtAddress, JTextField txtPort, JTextField txtBanco, JTextField txtUser, JTextField txtPassword) {
 		this.fBanco = fBanco;
 		this.lblConnStatus = lblConnStatus;
 		this.lblConn = lblConn;
@@ -65,27 +60,30 @@ public class btnConexaoTestControlador implements ActionListener {
 		this.txtPassword = txtPassword;
 	}
 
+	//evento do butao pressionado
 	public void actionPerformed(ActionEvent e) {
-		//System.out.println(lblConn.getText());
+		//verifica conexao
 		try {
 			objConexao = DriverManager.getConnection(lblConn.getText());
 			result++;
-			//System.out.println(lblConn.getText());
 		} catch (Exception ex1) {
 			ex1.printStackTrace();
 		} 
+		//fecha conexao
 		try {
 			objConexao.close();
 			
 		} catch (Exception ex2) {
 			ex2.printStackTrace();
 		}
+		//define resultados para campo de verificacao de conexao
 		if (result == 0) {
 			lblConnStatus.setText("Connection cannot be established");
 			lblConnStatus.setForeground(Color.red);
 		} else {
 			lblConnStatus.setText("Connection can be established");
 			lblConnStatus.setForeground(Color.green);
+			//conexao bem sucedia ->tela de login
 			new Login().getfLogin().setVisible(true);
 			fBanco.setVisible(false);
 			
