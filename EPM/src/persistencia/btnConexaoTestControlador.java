@@ -5,8 +5,11 @@ import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+
+import login.Login;
 /**
  *  Esse é a classe controlador do butao de testConnection
  *   - Overview da classe
@@ -33,6 +36,8 @@ import javax.swing.JTextField;
 public class btnConexaoTestControlador implements ActionListener {
 	
 	//propriedades da classe
+	private boolean connectPermission = false;
+	private JFrame fBanco = null;
 	private JLabel lblConn = null;
 	private JLabel lblConnStatus = null;
 	private JTextField txtAddress = null;
@@ -48,7 +53,9 @@ public class btnConexaoTestControlador implements ActionListener {
 	
 	//construtor
 	
-	public btnConexaoTestControlador(JLabel lblConnStatus, JLabel lblConn, JTextField txtAddress, JTextField txtPort, JTextField txtBanco, JTextField txtUser, JTextField txtPassword) {
+	public btnConexaoTestControlador(boolean connectPermission, JFrame fBanco, JLabel lblConnStatus, JLabel lblConn, JTextField txtAddress, JTextField txtPort, JTextField txtBanco, JTextField txtUser, JTextField txtPassword) {
+		this.connectPermission = connectPermission;
+		this.fBanco = fBanco;
 		this.lblConnStatus = lblConnStatus;
 		this.lblConn = lblConn;
 		this.txtAddress = txtAddress;
@@ -59,15 +66,16 @@ public class btnConexaoTestControlador implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		System.out.println(lblConn.getText());
+		//System.out.println(lblConn.getText());
 		try {
-			this.objConexao = DriverManager.getConnection(lblConn.getText());
+			objConexao = DriverManager.getConnection(lblConn.getText());
 			result++;
+			//System.out.println(lblConn.getText());
 		} catch (Exception ex1) {
 			ex1.printStackTrace();
 		} 
 		try {
-			this.objConexao.close();
+			objConexao.close();
 			
 		} catch (Exception ex2) {
 			ex2.printStackTrace();
@@ -78,6 +86,9 @@ public class btnConexaoTestControlador implements ActionListener {
 		} else {
 			lblConnStatus.setText("Connection can be established");
 			lblConnStatus.setForeground(Color.green);
+			new Login().getfLogin().setVisible(true);
+			fBanco.setVisible(false);
+			
 		}
 		result = 0;
 
