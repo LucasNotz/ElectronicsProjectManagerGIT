@@ -1,12 +1,12 @@
 package persistencia;
-import java.sql.Connection;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
 import java.sql.DriverManager;
 
+import javax.swing.JLabel;
 import javax.swing.JTextField;
-
-import org.mariadb.jdbc.Connection;
 /**
  *  Esse é a classe controlador do butao de testConnection
  *   - Overview da classe
@@ -16,32 +16,41 @@ import org.mariadb.jdbc.Connection;
  *  Construtor
  *  
  *  actionPerformed()
- *  	
  *  
+ *  	try connectar
+ *  
+ *  	try desconectar
+ *  
+ *  conectarTest()
+ *  
+ *  desconectarTest()
+ *  	
+ *  !static variables are constant through the whole class
+ *  !aka there is no need to instance the class to access it
+ *  !eu estou usando ela para poder testar a connexao sem ter que instancia essa classe
  */
 
 public class btnConexaoTestControlador implements ActionListener {
 	
 	//propriedades da classe
-	String connField = null;
-	JTextField txtAddress = new JTextField();
-	JTextField txtPort= new JTextField();
-	JTextField txtBanco= new JTextField();
-	JTextField txtUser = new JTextField();
-	JTextField txtPassword = new JTextField();
+	private JLabel lblConn = null;
+	private JLabel lblConnStatus = null;
+	private JTextField txtAddress = null;
+	private JTextField txtPort= null;
+	private JTextField txtBanco= null;
+	private JTextField txtUser = null;
+	private JTextField txtPassword = null;
+	
+	private int result = 0;
 	
 	//propriedade da classe connection testing
-	private Connection objConexao = null;
-	private btnConexaoTestControlador objTest = new btnConexaoTestControlador();
+	public Connection objConexao = null;
 	
 	//construtor
 	
-	public btnConexaoTestControlador(){
-		
-	}
-	
-	public btnConexaoTestControlador(String connField, JTextField txtAddress, JTextField txtPort, JTextField txtBanco, JTextField txtUser, JTextField txtPassword) {
-		this.connField = connField;
+	public btnConexaoTestControlador(JLabel lblConnStatus, JLabel lblConn, JTextField txtAddress, JTextField txtPort, JTextField txtBanco, JTextField txtUser, JTextField txtPassword) {
+		this.lblConnStatus = lblConnStatus;
+		this.lblConn = lblConn;
 		this.txtAddress = txtAddress;
 		this.txtPort = txtPort;
 		this.txtBanco = txtBanco;
@@ -50,24 +59,27 @@ public class btnConexaoTestControlador implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		connField = "jdbc:mariadb://"+ txtAddress.getText() + ":"+ txtPort.getText() + "/" + txtBanco.getText() 
-		+"?user="+ txtUser.getText() +"&password=" + txtPassword.getText() + "&serverTimezone=UTC&userSSL=false";
-		
+		System.out.println(lblConn.getText());
 		try {
-			objConexao.conectarTest();
+			this.objConexao = DriverManager.getConnection(lblConn.getText());
+			result++;
+		} catch (Exception ex1) {
+			ex1.printStackTrace();
+		} 
+		try {
+			this.objConexao.close();
+			
+		} catch (Exception ex2) {
+			ex2.printStackTrace();
 		}
-		
-	}
+		if (result == 0) {
+			lblConnStatus.setText("Connection cannot be established");
+			lblConnStatus.setForeground(Color.red);
+		} else {
+			lblConnStatus.setText("Connection can be established");
+			lblConnStatus.setForeground(Color.green);
+		}
+		result = 0;
 
-	Connection getObjConexaoTest() throws Exception {
-		return objConexao;
-	}
-	
-	void conectarTest() throws Exception {
-		objConexao = DriverManager.getConnection(connField);
-	}
-	
-	void desconectarTest() throws Exception {
-		objConexao.close();
-	}
+	}	
 }

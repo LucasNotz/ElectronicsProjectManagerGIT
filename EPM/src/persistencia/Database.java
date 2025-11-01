@@ -56,7 +56,7 @@ public class Database {
 	JTextField txtUser = new JTextField();
 	JTextField txtPassword = new JTextField();
 	
-	JButton btnTestString = new JButton("See String");
+	JButton btnTestString = new JButton("Set connection");
 	JButton btnTestCon = new JButton("Test connection");
 	JButton btnCon = new JButton("Connect");
 	
@@ -64,9 +64,11 @@ public class Database {
 			"jdbc:mariadb://<ip>:<port/<database>?user=<user>&password=<password>&serverTimezone=UTC&userSSL=false"
 			);
 	
-	JLabel lblConn = new JLabel("Connection link empty");
-	
-	String connField = ""; 
+	JLabel lblConn = new JLabel(
+			"jdbc:mariadb://"+txtAddress.getText()+":"+txtPort.getText()+"/"+txtBanco.getText()+
+			"?user="+txtUser.getText()+"&password="+txtPassword.getText()+"&serverTimezone=UTC&userSSL=false"
+			//"jdbc:mariadb://127.0.0.1:3306/HUBtest_db?user=java&password=ceub123456&serverTimezone=UTC&userSSL=false"
+			);
 	
 	JLabel lblConnStatus = new JLabel("No connection");
 	
@@ -130,14 +132,15 @@ public class Database {
 		pn.add(btnTestString);
 		btnTestString.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				lblConn.setText(connField);
+				lblConn.setText("jdbc:mariadb://"+ txtAddress.getText() + ":"+ txtPort.getText() + "/" + txtBanco.getText() 
+				+"?user="+ txtUser.getText() +"&password=" + txtPassword.getText() + "&serverTimezone=UTC&userSSL=false");
 			}
 		});
 		
 		//btn test connection config
 		btnTestCon.setBounds(170, 200, 150,20);
 		pn.add(btnTestCon);
-		btnTestCon.addActionListener(new btnConexaoTestControlador(connField, txtAddress, txtPort, txtBanco, txtUser, txtPassword));
+		btnTestCon.addActionListener(new btnConexaoTestControlador(lblConnStatus, lblConn, txtAddress, txtPort, txtBanco, txtUser, txtPassword));
 		
 		//btn connection config
 		btnCon.setBounds(340, 200, 100,20);
@@ -152,8 +155,8 @@ public class Database {
 		pn.add(lblConn);
 		
 		//lbl conn status
-		lblConnStatus.setBounds(150,400,200,20);
-		lblConnStatus.setForeground(Color.red);
+		lblConnStatus.setBounds(150,400,250,20);
+		lblConnStatus.setForeground(Color.black);
 		pn.add(lblConnStatus);
 		
 	}
@@ -167,12 +170,10 @@ public class Database {
 		//instacia obj conexao e permite utilizar ele sem ter que instanciar a classe
 		//getobjconexao fornece essa informacao
 	void conectar() throws Exception {
-		objConexao = DriverManager.getConnection(
-				"jdbc:mariadb://127.0.0.1:3306/HUBtest_db?user=java&password=ceub123456"
-				+ "&serverTimezone=UTC&userSSL=false"
-				);
+		objConexao = DriverManager.getConnection(lblConn.getText());
 				
 	}
+	
 	
 	void desconectar() throws Exception {
 		objConexao.close();
@@ -180,3 +181,5 @@ public class Database {
 	
 	
 }
+
+//"jdbc:mariadb://127.0.0.1:3306/HUBtest_db?user=java&password=ceub123456&serverTimezone=UTC&userSSL=false"
