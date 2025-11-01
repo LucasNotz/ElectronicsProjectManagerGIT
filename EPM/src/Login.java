@@ -16,7 +16,6 @@ import javax.swing.JTextField;
  * 
  * Propriedade da classe
  * 
- * PSVM
  * 
  * Login() - construtor do gui
  * 
@@ -44,10 +43,6 @@ public class Login {
 	JButton btnSair = new JButton("Sair");
 	JButton btnLimpar = new JButton("Limpar");
 	
-	//main method
-	public static void main(String[] args) {
-		new Login().fLogin.setVisible(true);
-	}
 	
 	//Construtor do GUI de login
 	public Login() {
