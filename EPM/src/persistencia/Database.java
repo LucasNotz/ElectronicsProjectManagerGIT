@@ -53,7 +53,7 @@ public class Database {
 	
 	//propriedades da classe
 	
-	private Connection objConexao = null;
+	public Connection objConexao = null;
 	
 	//propriedade para gui
 	
@@ -89,18 +89,14 @@ public class Database {
 	private JLabel lblConnFormat = new JLabel(
 			"jdbc:mariadb://<ip>:<port/<database>?user=<user>&password=<password>&serverTimezone=UTC&userSSL=false"
 			);
-	
-	private JLabel lblConn = new JLabel(
-			"jdbc:mariadb://"+txtAddress.getText()+":"+txtPort.getText()+"/"+txtBanco.getText()+
-			"?user="+txtUser.getText()+"&password="+txtPassword.getText()+"&serverTimezone=UTC&userSSL=false"
-			//"jdbc:mariadb://127.0.0.1:3306/HUBtest_db?user=java&password=ceub123456&serverTimezone=UTC&userSSL=false"
-			);
+
+	private static JLabel lblConn = new JLabel();
 	
 	private JLabel lblConnStatus = new JLabel("No connection");
 	
 	//file aka previous connections
 	private JLabel lblFileConn = new JLabel("Previous connections");
-	private File infoFile;
+	private File infoFile = new File("connections.txt");
 	private JList<String> listInfo = new JList<String>();
 	private DefaultListModel<String> dlm = new DefaultListModel<String>();
 	private JScrollPane jspInfo = new JScrollPane(listInfo);
@@ -116,7 +112,7 @@ public class Database {
 	}
 	
 	//método construtor gui 
-	
+
 	public Database(){
 		
 		//frame config
@@ -228,8 +224,8 @@ public class Database {
 				BufferedReader br = null;
 				try {
 					br = new BufferedReader(new FileReader(infoFile));
-				} catch (FileNotFoundException e) {
-					e.printStackTrace();
+				} catch (FileNotFoundException e8) {
+					e8.printStackTrace();
 				}
 				//defined strings
 				String selected = listInfo.getSelectedValue();
@@ -239,11 +235,37 @@ public class Database {
 					while ((line = br.readLine()) != null) {
 						if (line.trim().equals(selected)) {
 							lblConn.setText(selected);
-							return;
+							//get address
+							String temp = selected;
+							String[] temp0 = temp.split("//");
+							//temp0[0] // jdbc:mariadb
+							String[] temp1 = temp0[1].split(":");
+							//temp1[0] // 127.0.0.1
+							String[] temp2 = temp1[1].split("/");
+							//temp2[0] // 3306
+							String[] temp3 = temp2[1].split("\\?");
+							//temp3[0] // HUBtest_db
+							String[] temp4 = temp3[1].split("&");
+							String[] temp41 = temp4[0].split("=");
+							// temp41[1] // java
+							String[] temp5 = temp4[1].split("=");
+							//temp5[1] //ceub123456
+							System.out.println(temp1[0]);
+							System.out.println(temp2[0]);
+							System.out.println(temp3[0]);
+							System.out.println(temp41[1]);
+							System.out.println(temp5[1]);
+							txtBanco.setText(temp3[0]);
+							txtAddress.setText(temp1[0]);
+							txtPort.setText(temp2[0]);
+							txtUser.setText(temp41[1]);
+							txtPassword.setText(temp5[1]);
+							lblConn.setText("jdbc:mariadb://"+ txtAddress.getText() + ":"+ txtPort.getText() + "/" + txtBanco.getText() 
+							+"?user="+ txtUser.getText() +"&password=" + txtPassword.getText() + "&serverTimezone=UTC&userSSL=false");
 						}
 					}
-				} catch (IOException e) {
-					e.printStackTrace();
+				} catch (IOException e2) {
+					e2.printStackTrace();
 				}
 			}
 		});
@@ -261,7 +283,7 @@ public class Database {
 		btnRefreshConn.setBounds(450,140,170,20);
 		pn.add(btnRefreshConn);
 		btnRefreshConn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e2) {
+			public void actionPerformed(ActionEvent e4) {
 				dlm.removeAllElements();
 				int i = 0;
 				try (Scanner myFileScanner = new Scanner(infoFile)){
@@ -270,30 +292,19 @@ public class Database {
 						dlm.add(i, data);
 						i++;
 					}
-				} catch (IOException e1) {
-					e1.printStackTrace();
+				} catch (IOException e5) {
+					e5.printStackTrace();
 				}
 			}
 		});
 		
-		//create file if not exists
-		try {
-			infoFile = new File("connections.txt");
-			if (infoFile.createNewFile()) {
-				System.out.println("File created: " + infoFile.getName());
-			} else {
-				System.out.println("File " + infoFile.getName() + " alerady exists.");
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 		//file handling ends here !
 		
 		//button set string config
 		btnTestString.setBounds(80, 200, 150,20);
 		pn.add(btnTestString);
 		btnTestString.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent e6) {
 				//updates value of lblConn
 				lblConn.setText("jdbc:mariadb://"+ txtAddress.getText() + ":"+ txtPort.getText() + "/" + txtBanco.getText() 
 				+"?user="+ txtUser.getText() +"&password=" + txtPassword.getText() + "&serverTimezone=UTC&userSSL=false");
@@ -331,7 +342,8 @@ public class Database {
 		//getobjconexao fornece essa informacao
 	void conectar() throws Exception {
 		objConexao = DriverManager.getConnection(lblConn.getText());
-				
+		System.out.println(lblConn.getText());
+
 	}
 	
 	
