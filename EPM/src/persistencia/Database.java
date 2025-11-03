@@ -342,7 +342,7 @@ public class Database {
 		//getobjconexao fornece essa informacao
 	void conectar() throws Exception {
 		objConexao = DriverManager.getConnection(lblConn.getText());
-		System.out.println(lblConn.getText());
+		//System.out.println(lblConn.getText());
 
 	}
 	

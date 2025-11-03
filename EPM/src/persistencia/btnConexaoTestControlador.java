@@ -69,6 +69,7 @@ public class btnConexaoTestControlador implements ActionListener {
 		//verifica conexao
 		try {
 			objConexaoTest = DriverManager.getConnection(lblConn.getText());
+			System.out.println("here");
 			result++;
 		} catch (Exception ex1) {
 			ex1.printStackTrace();

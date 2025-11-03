@@ -1,7 +1,9 @@
 package login;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
@@ -34,14 +36,15 @@ public class BtnRegistrarControlador implements ActionListener {
 	//propriedade da classe
 	private JTextField txtUser = null;
 	private JTextField txtSenha = null;
-	
+	private JLabel lblLoginRegisterStatus = null;
 	private String userBuscado = "";
 
 	
 	//construtor
-	public BtnRegistrarControlador(JTextField txtUser, JTextField txtSenha) {
+	public BtnRegistrarControlador(JTextField txtUser, JTextField txtSenha, JLabel lblLoginRegisterStatus) {
 		this.txtUser = txtUser;
 		this.txtSenha = txtSenha;
+		this.lblLoginRegisterStatus = lblLoginRegisterStatus;
 	}
 	
 	public void actionPerformed(ActionEvent e) {
@@ -81,10 +84,13 @@ public class BtnRegistrarControlador implements ActionListener {
 					objUser.setUsername(txtUser.getText());
 					objUser.setPassword(txtSenha.getText());
 					objUser.persistir();
+					lblLoginRegisterStatus.setText("Usuário novo criado");
+					lblLoginRegisterStatus.setForeground(Color.GREEN);
 					
 					
 				} else if (confirm == JOptionPane.NO_OPTION) {
 					JOptionPane.showMessageDialog(null, "Processo cancelado");
+					lblLoginRegisterStatus.setText("");
 				}
 				
 				

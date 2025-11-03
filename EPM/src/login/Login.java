@@ -44,6 +44,9 @@ public class Login {
 	private JButton btnSair = new JButton("Sair");
 	private JButton btnLimpar = new JButton("Limpar");
 	
+	//login status
+	private JLabel lblLoginRegisterStatus = new JLabel("");
+	
 	//flogin frame getters and setters (allows access when setting frame to visible)
 	public JFrame getfLogin() {
 		return fLogin;
@@ -116,12 +119,17 @@ public class Login {
 		btnSair.setFont(new Font("Serif", Font.PLAIN, 35));
 		pn.add(btnSair);
 		
+		//status labels
+		lblLoginRegisterStatus.setBounds(580,350,400,60);
+		lblLoginRegisterStatus.setFont(new Font("Serif", Font.PLAIN, 25));
+		pn.add(lblLoginRegisterStatus);
+		
 		//Button controllers
 		//Login button references controller class
-		btnLogin.addActionListener(new BtnLoginControlador(getfLogin(), txtUser, txtSenha));
+		btnLogin.addActionListener(new BtnLoginControlador(getfLogin(), txtUser, txtSenha, lblLoginRegisterStatus));
 		
 		//Register button references controller class
-		btnRegistrar.addActionListener(new BtnRegistrarControlador(txtUser, txtSenha));
+		btnRegistrar.addActionListener(new BtnRegistrarControlador(txtUser, txtSenha, lblLoginRegisterStatus));
 		
 		//Sair button 
 		btnSair.addActionListener(new ActionListener() {
