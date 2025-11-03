@@ -1,10 +1,10 @@
 package apresentacao.project;
 
-import login.Login;
 import java.awt.Color;
 import java.awt.Font;
 
 import javax.swing.DefaultListModel;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -13,8 +13,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-
-import login.Login;
+import javax.swing.JTextArea;
 
 public class ProjectMenu {
 	
@@ -32,6 +31,13 @@ public class ProjectMenu {
 	private DefaultListModel<String> dlm = new DefaultListModel<String>();
 	private JList<String> listProjects = null;
 	private JScrollPane jspProjects = new JScrollPane(listProjects);
+	private JButton btnVer = new JButton("Ver");
+	private JButton btnAdicionar = new JButton("Adicionar");
+	private JButton btnMudar = new JButton("Alterar");
+	private JButton btnRemover = new JButton("Remover");
+	private JLabel lblPreview = new JLabel("Preview");
+	private JTextArea aPreview = new JTextArea();
+	
 	
 
 	public ProjectMenu(String user) {
@@ -57,7 +63,7 @@ public class ProjectMenu {
 		pn.add(lblTitulo);
 		
 		lblTituloUser.setBounds(620,40,500,65);
-		lblTituloUser.setFont(new Font("Serif", Font.BOLD, 40));
+		lblTituloUser.setFont(new Font("Comic Sans", Font.BOLD, 40));
 		pn.add(lblTituloUser);
 		lblTituloUser.setText(user);
 		System.out.println("Current user(ProjMenu)" + user);
@@ -69,6 +75,13 @@ public class ProjectMenu {
 		
 		jspProjects.setBounds(150,200,900,200);
 		pn.add(jspProjects);
+		
+		btnVer.setBounds(150,250,300,60);
+		pn.add(btnVer);
+		
+		btnAdicionar.setBounds(460,250,300,60);
+		//pn.add
+		
 		
 		
 		

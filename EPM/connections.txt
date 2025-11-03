@@ -3,3 +3,11 @@ jdbc:mariadb://127.0.0.1:3306/HUBtest_db?user=java&password=ceub123456&serverTim
 
 
 
+
+
+
+
+
+
+
+jdbc:mariadb://127.0.0.1:3306/HUBtest_db?user=daniel&password=ceub123456&serverTimezone=UTC&userSSL=false
