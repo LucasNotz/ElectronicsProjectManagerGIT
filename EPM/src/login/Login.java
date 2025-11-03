@@ -1,3 +1,4 @@
+package login;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -16,53 +17,65 @@ import javax.swing.JTextField;
  * 
  * Propriedade da classe
  * 
- * PSVM
  * 
  * Login() - construtor do gui
  * 
  * Controladores
+ * 
  */
 
 public class Login {
-
+	
 	//propriedades da classe
-	JFrame fLogin = new JFrame(); //Frame
-	JPanel pn = new JPanel(); //Painel
-	JLabel lblTitulo = new JLabel("Projeto HUB"); //Título
+	private JFrame fLogin = new JFrame(); //Frame
+	private JPanel pn = new JPanel(); //Painel
+	private JLabel lblTitulo = new JLabel("Projeto HUB"); //Título
 	
 	//User Variables
-	JLabel lblUser = new JLabel("Username: ");
-	JTextField txtUser = new JTextField();
+	private JLabel lblUser = new JLabel("Username: ");
+	private JTextField txtUser = new JTextField();
 	
 	//Password Varibles
-	JLabel lblSenha = new JLabel("Senha: ");
-	JTextField txtSenha = new JTextField();
+	private JLabel lblSenha = new JLabel("Senha: ");
+	private JTextField txtSenha = new JTextField();
 	
 	//Button Variables
-	JButton btnLogin = new JButton("Login");
-	JButton btnRegistrar = new JButton("Registrar");
-	JButton btnSair = new JButton("Sair");
-	JButton btnLimpar = new JButton("Limpar");
+	private JButton btnLogin = new JButton("Login");
+	private JButton btnRegistrar = new JButton("Registrar");
+	private JButton btnSair = new JButton("Sair");
+	private JButton btnLimpar = new JButton("Limpar");
 	
-	//main method
-	public static void main(String[] args) {
-		new Login().fLogin.setVisible(true);
+	//login status
+	private JLabel lblLoginRegisterStatus = new JLabel("");
+	
+	//flogin frame getters and setters (allows access when setting frame to visible)
+	public JFrame getfLogin() {
+		return fLogin;
 	}
+
+
+	public void setfLogin(JFrame fLogin) {
+		this.fLogin = fLogin;
+	}
+	
+	
 	
 	//Construtor do GUI de login
 	public Login() {
 		
 		//frame config
-		fLogin.setTitle("Login do Projeto HUB");
-		fLogin.setSize(1200,800);
-		fLogin.setResizable(false);
-		fLogin.setDefaultCloseOperation(fLogin.EXIT_ON_CLOSE);
-		fLogin.setLocationRelativeTo(null);
+		getfLogin().setTitle("Login do Projeto HUB");
+		getfLogin().setSize(1200,800);
+		getfLogin().setResizable(false);
+		getfLogin().setDefaultCloseOperation(getfLogin().EXIT_ON_CLOSE);
+		getfLogin().setLocationRelativeTo(null);
+		
+		
 		
 		//panel config
 		pn.setLayout(null);
 		pn.setBackground(Color.white);
-		fLogin.add(pn);
+		getfLogin().add(pn);
 		
 		//titulo config
 		lblTitulo.setBounds(440,60,400,65);
@@ -107,12 +120,17 @@ public class Login {
 		btnSair.setFont(new Font("Serif", Font.PLAIN, 35));
 		pn.add(btnSair);
 		
+		//status labels
+		lblLoginRegisterStatus.setBounds(580,350,400,60);
+		lblLoginRegisterStatus.setFont(new Font("Serif", Font.PLAIN, 25));
+		pn.add(lblLoginRegisterStatus);
+		
 		//Button controllers
 		//Login button references controller class
-		btnLogin.addActionListener(new BtnLoginControlador(fLogin, txtUser, txtSenha));
+		btnLogin.addActionListener(new BtnLoginControlador(getfLogin(), txtUser, txtSenha, lblLoginRegisterStatus));
 		
 		//Register button references controller class
-		btnRegistrar.addActionListener(new BtnRegistrarControlador(txtUser, txtSenha));
+		btnRegistrar.addActionListener(new BtnRegistrarControlador(txtUser, txtSenha, lblLoginRegisterStatus));
 		
 		//Sair button 
 		btnSair.addActionListener(new ActionListener() {
@@ -130,7 +148,9 @@ public class Login {
 		});
 		
 	}
-	
-	
+
+
+
+
 	
 }

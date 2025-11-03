@@ -1,7 +1,11 @@
+package login;
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
@@ -48,17 +52,19 @@ import negocio.User;
 public class BtnLoginControlador implements ActionListener {
 	
 	//propriedades da classe
-	JFrame fLogin = null; //referenciado para pode descartar o frame mais a frente
-	JTextField txtUser = null;
-	JTextField txtSenha = null;
+	private JFrame fLogin = null; //referenciado para pode descartar o frame mais a frente
+	private JLabel lblLoginRegisterStatus = null;
+	private JTextField txtUser = null;
+	private JTextField txtSenha = null;
 	
 	//informacoes a serem buscadas
-	String userBuscado = "";
-	String senhaBuscada = "";
+	static String userBuscado = "";
+	private String senhaBuscada = "";
 	
 	//método construtor cheio
-	public BtnLoginControlador(JFrame fLogin, JTextField txtUser, JTextField txtSenha) {
+	public BtnLoginControlador(JFrame fLogin, JTextField txtUser, JTextField txtSenha, JLabel lblLoginRegisterStatus) {
 		this.fLogin = fLogin;
+		this.lblLoginRegisterStatus = lblLoginRegisterStatus;
 		this.txtUser = txtUser;
 		this.txtSenha = txtSenha;
 	}
@@ -92,16 +98,21 @@ public class BtnLoginControlador implements ActionListener {
 				//if equal and case equal (sql queries case are case insensitive)
 				//System.out.println("user match");
 				if(senhaBuscada.equals(txtSenha.getText())) {
-					System.out.println("password match");
+					System.out.println("password match, login success");
 					//show next frame
-					ProjectMenu prMenuGUI = new ProjectMenu();
+					ProjectMenu prMenuGUI = new ProjectMenu(userBuscado);
 					prMenuGUI.fProjectMenu().setVisible(true);
 					//hide login
 					fLogin.dispose();
+				} else {
+					lblLoginRegisterStatus.setText("Senha incorreta");
+					lblLoginRegisterStatus.setForeground(Color.RED);
 				}
 				
 			} else {
 				//if not equal and/or cases not equal
+				lblLoginRegisterStatus.setText("User inexistente");
+				lblLoginRegisterStatus.setForeground(Color.RED);
 				return;
 			}
 			

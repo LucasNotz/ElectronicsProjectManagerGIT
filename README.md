@@ -1,4 +1,4 @@
-# ElectronicsProjectManagerGIT
+s# ElectronicsProjectManagerGIT
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,7 +16,10 @@
 <p>git config --global user.email "insert email"</p>
 
 <h3>Origin becomes the repo references, so push origin means push to this repo git </h3>
-<p>remote add origin https://github.com/your account/your repo.git</p>
+<p>git remote add origin https://github.com/your account/your repo.git</p>
+
+<h3>Define access with token </h3>
+<p>git remote set-url origin https://username:token@github.com/username/repo.git</p>
 
 <h3>Remote connection check</h3>
 <p>git remote -v</p>
