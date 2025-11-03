@@ -52,14 +52,14 @@ import negocio.User;
 public class BtnLoginControlador implements ActionListener {
 	
 	//propriedades da classe
-	JFrame fLogin = null; //referenciado para pode descartar o frame mais a frente
-	JLabel lblLoginRegisterStatus = null;
-	JTextField txtUser = null;
-	JTextField txtSenha = null;
+	private JFrame fLogin = null; //referenciado para pode descartar o frame mais a frente
+	private JLabel lblLoginRegisterStatus = null;
+	private JTextField txtUser = null;
+	private JTextField txtSenha = null;
 	
 	//informacoes a serem buscadas
-	String userBuscado = "";
-	String senhaBuscada = "";
+	static String userBuscado = "";
+	private String senhaBuscada = "";
 	
 	//método construtor cheio
 	public BtnLoginControlador(JFrame fLogin, JTextField txtUser, JTextField txtSenha, JLabel lblLoginRegisterStatus) {
@@ -98,9 +98,9 @@ public class BtnLoginControlador implements ActionListener {
 				//if equal and case equal (sql queries case are case insensitive)
 				//System.out.println("user match");
 				if(senhaBuscada.equals(txtSenha.getText())) {
-					System.out.println("password match");
+					System.out.println("password match, login success");
 					//show next frame
-					ProjectMenu prMenuGUI = new ProjectMenu();
+					ProjectMenu prMenuGUI = new ProjectMenu(userBuscado);
 					prMenuGUI.fProjectMenu().setVisible(true);
 					//hide login
 					fLogin.dispose();

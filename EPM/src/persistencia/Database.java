@@ -250,11 +250,11 @@ public class Database {
 							// temp41[1] // java
 							String[] temp5 = temp4[1].split("=");
 							//temp5[1] //ceub123456
-							System.out.println(temp1[0]);
-							System.out.println(temp2[0]);
-							System.out.println(temp3[0]);
-							System.out.println(temp41[1]);
-							System.out.println(temp5[1]);
+							System.out.println("IP " + temp1[0]);
+							System.out.println("Port " + temp2[0]);
+							System.out.println("DB name " + temp3[0]);
+							System.out.println("User " + temp41[1]);
+							System.out.println("Password " + temp5[1]);
 							txtBanco.setText(temp3[0]);
 							txtAddress.setText(temp1[0]);
 							txtPort.setText(temp2[0]);

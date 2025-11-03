@@ -21,10 +21,11 @@ import javax.swing.JTextField;
  * Login() - construtor do gui
  * 
  * Controladores
+ * 
  */
 
 public class Login {
-
+	
 	//propriedades da classe
 	private JFrame fLogin = new JFrame(); //Frame
 	private JPanel pn = new JPanel(); //Painel
@@ -147,6 +148,7 @@ public class Login {
 		});
 		
 	}
+
 
 
 
