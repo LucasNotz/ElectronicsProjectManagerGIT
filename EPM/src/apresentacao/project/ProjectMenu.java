@@ -15,6 +15,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
+import negocio.Project;
+
 public class ProjectMenu {
 	
 	private String user = "";
@@ -28,8 +30,8 @@ public class ProjectMenu {
 	private JMenu menuOpcao = new JMenu("Navegar");
 	private JMenuItem menuItem = new JMenuItem("Menu Partes");
 	private JMenuItem menuItem2 = new JMenuItem("Menu Projetos");
-	private DefaultListModel<String> dlm = new DefaultListModel<String>();
-	private JList<String> listProjects = null;
+	private DefaultListModel<String> dlm2 = new DefaultListModel<String>();
+	private JList<String> listProjects = new JList<String>();
 	private JScrollPane jspProjects = new JScrollPane(listProjects);
 	private JButton btnVer = new JButton("Ver");
 	private JButton btnAdicionar = new JButton("Adicionar");
@@ -40,7 +42,7 @@ public class ProjectMenu {
 	
 	
 
-	public ProjectMenu(String user) {
+	public ProjectMenu(String user) throws Exception {
 		//frame config
 		this.user = user;
 		fProjectMenu.setTitle("Menu Projetos");
@@ -58,6 +60,7 @@ public class ProjectMenu {
 		pn.setBackground(Color.white);
 		fProjectMenu.add(pn);
 		
+		//titulo config
 		lblTitulo.setBounds(320,40,300,65);
 		lblTitulo.setFont(new Font("Serif", Font.BOLD, 40));
 		pn.add(lblTitulo);
@@ -69,19 +72,46 @@ public class ProjectMenu {
 		System.out.println("Current user(ProjMenu)" + user);
 		System.out.println("-----");
 		
+		//projects display config
 		lblProjeto.setBounds(150, 150, 200, 45);
-		lblProjeto.setFont(new Font("Serif", Font.PLAIN, 30));
+		lblProjeto.setFont(new Font("Serif", Font.ITALIC, 30));
 		pn.add(lblProjeto);
 		
 		jspProjects.setBounds(150,200,900,200);
+		listProjects.setModel(dlm2);
 		pn.add(jspProjects);
+		int k = 0;
+		for (int i = 0; i < Project.getProjectSizes(); i++) {
+			for (int j = 0; j < 5; j ++) {
+				dlm2.add(k, Project.select(i, j));
+				k++;
+			}
+		}
 		
-		btnVer.setBounds(150,250,300,60);
+		//buttons config
+		btnVer.setBounds(150,420,200,60);
+		btnVer.setFont(new Font("Serif", Font.PLAIN, 25));
 		pn.add(btnVer);
 		
-		btnAdicionar.setBounds(460,250,300,60);
-		//pn.add
+		btnAdicionar.setBounds(380,420,200,60);
+		btnAdicionar.setFont(new Font("Serif", Font.PLAIN, 25));
+		pn.add(btnAdicionar);
 		
+		btnMudar.setBounds(620,420,200,60);
+		btnMudar.setFont(new Font("Serif", Font.PLAIN, 25));
+		pn.add(btnMudar);
+		
+		btnRemover.setBounds(850,420,200,60);
+		btnRemover.setFont(new Font("Serif", Font.PLAIN, 25));
+		pn.add(btnRemover);
+		
+		//preview display config
+		lblPreview.setBounds(150,500, 300,40);
+		lblPreview.setFont(new Font("Serif", Font.ITALIC, 30));
+		pn.add(lblPreview);
+		
+		aPreview.setBounds(150,200,900,200);
+		pn.add(aPreview);
 		
 		
 		

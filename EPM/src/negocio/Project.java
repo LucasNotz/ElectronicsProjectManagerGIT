@@ -1,8 +1,8 @@
 package negocio;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
+
+import persistencia.ProjectDAOSelect;
 
 /**
  * Essa classe é a Projeto
@@ -81,16 +81,17 @@ public class Project {
 	
 	//persistir a ser adicionado
 	
-	//not sure if this is necessary
-	public Collection<String> getTodos() throws Exception {
-		ArrayList<String> allParts = new ArrayList<String>();
-		for(String part : this.parts) {
-			allParts.add(part);
-		}
-		return allParts;
+	public static String select(int i, int j) throws Exception {
+		ProjectDAOSelect DAOSelect = new ProjectDAOSelect();
+		String[][] projectData = DAOSelect.select();
+		return projectData[i][j];
 	}
 	
-	
+	public static int getProjectSizes() throws Exception {
+		ProjectDAOSelect DAOSelect2 = new ProjectDAOSelect();
+		int i = DAOSelect2.howManyProjects();
+		return i;
+	}
 	
 	
 }
