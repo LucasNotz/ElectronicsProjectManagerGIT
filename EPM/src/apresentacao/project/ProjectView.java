@@ -11,6 +11,9 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
 
 import apresentacao.part.PartMenu;
 import negocio.Project;
@@ -27,7 +30,8 @@ public class ProjectView {
 	private JLabel lblOrcamento = new JLabel();
 	private JLabel lblDescricao = new JLabel();
 	private JLabel lblOrcamentoV = new JLabel();
-	private JLabel lblDescricaoV = new JLabel();
+	private JTextArea aDescricaoV = new JTextArea();
+	private JScrollPane jspPreview = new JScrollPane(aDescricaoV,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 	
 	public JFrame getJFrame() {
 		return fPartView;
@@ -77,25 +81,27 @@ public class ProjectView {
 		pn.add(lblProject);
 		
 		lblOrcamento.setText("Orcamento: $");
-		lblOrcamento.setBounds(60, 130, 200,30);
+		lblOrcamento.setBounds(60, 130, 190,30);
 		lblOrcamento.setFont(new Font("Serif", Font.BOLD, 25));
 		pn.add(lblOrcamento);
 		
 		lblDescricao.setText("Descricao: ");
-		lblDescricao.setBounds(60, 180, 200,30);
+		lblDescricao.setBounds(60, 180, 170,30);
 		lblDescricao.setFont(new Font("Serif", Font.BOLD, 25));
 		pn.add(lblDescricao);
 		
 		System.out.println(Project.getProjectInfo(projectName));
 		lblOrcamentoV.setText(Project.getProjectInfo(projectName).get(0).toString());
-		lblOrcamentoV.setBounds(260, 130, 200,30);
+		lblOrcamentoV.setBounds(250, 130, 230,30);
 		lblOrcamentoV.setFont(new Font("Serif", Font.BOLD, 25));
 		pn.add(lblOrcamentoV);
 		
-		lblDescricaoV.setText(Project.getProjectInfo(projectName).get(1).toString());
-		lblDescricaoV.setBounds(260, 180, 200,30);
-		lblDescricaoV.setFont(new Font("Serif", Font.BOLD, 25));
-		pn.add(lblDescricaoV);
+		aDescricaoV.setText(Project.getProjectInfo(projectName).get(1).toString());
+		aDescricaoV.setEditable(false);
+		jspPreview.setBounds(210, 180,400,100);
+		aDescricaoV.setLineWrap(true);
+		aDescricaoV.setFont(new Font("Serif", Font.BOLD, 15));
+		pn.add(jspPreview);
 		
 		
 	}

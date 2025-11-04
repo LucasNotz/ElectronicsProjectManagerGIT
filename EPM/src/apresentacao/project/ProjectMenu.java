@@ -163,6 +163,7 @@ public class ProjectMenu {
 		pn.add(jspPreview);
 
 		listProjects.setSelectedIndex(0);
+		aPreview.setLineWrap(true);
 		listProjects.addMouseListener(new MouseListener() {
 			public void mouseClicked(MouseEvent e) {
 				System.out.println(listProjects.getSelectedIndex());
