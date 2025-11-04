@@ -86,12 +86,13 @@ public class ProjectView {
 		lblDescricao.setFont(new Font("Serif", Font.BOLD, 25));
 		pn.add(lblDescricao);
 		
-		lblOrcamentoV.setText(Project.getProjectInfo(projectName,0));
+		System.out.println(Project.getProjectInfo(projectName));
+		lblOrcamentoV.setText(Project.getProjectInfo(projectName).get(0).toString());
 		lblOrcamentoV.setBounds(260, 130, 200,30);
 		lblOrcamentoV.setFont(new Font("Serif", Font.BOLD, 25));
 		pn.add(lblOrcamentoV);
 		
-		lblDescricaoV.setText(Project.getProjectInfo(projectName,1));
+		lblDescricaoV.setText(Project.getProjectInfo(projectName).get(1).toString());
 		lblDescricaoV.setBounds(260, 180, 200,30);
 		lblDescricaoV.setFont(new Font("Serif", Font.BOLD, 25));
 		pn.add(lblDescricaoV);

@@ -2,6 +2,7 @@ package persistencia;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
@@ -94,22 +95,23 @@ public class ProjectDAO {
 		objBanco.desconectar();
 				
 	}
-	
-	public String[] getProjectInfo(String projetName) throws Exception {
-		objBanco.conectar();
-		System.out.println(123);
-		objExecucao = objBanco.getObjConexao().prepareStatement(
-				"select PR_budget, PR_description from PR_PROJECT where PR_name = ?");
-		
-		objExecucao.setString(1, projetName);
-		System.out.println(123);
-		String[] info = new String[2];
-		ResultSet rs = objExecucao.executeQuery();
-		System.out.println(123);
-		while (rs.next()) {
 
-			info[0] = rs.getString("PR_budget");
-			info[1] = rs.getString("PR_description");
+	public ArrayList<Object> getProjectInfo(String projectName) throws Exception {
+		objBanco.conectar();
+		
+		objExecucao = objBanco.getObjConexao().prepareStatement(
+				"select * from PR_PROJECT where PR_name = ?"
+				);
+		System.out.println(projectName);
+		ArrayList<Object> info = new ArrayList<Object>();
+		objExecucao.setString(1, projectName.strip());
+		
+		ResultSet rs = objExecucao.executeQuery();
+
+		if(rs.next()) {
+
+			info.add(0, rs.getString("PR_budget"));
+			info.add(1, rs.getString("PR_description"));
 
 		}
 		

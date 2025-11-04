@@ -1,5 +1,6 @@
 package negocio;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 import persistencia.ProjectDAO;
@@ -73,7 +74,7 @@ public class Project {
 	}
 
 	
-	public static int getProjectSizes(String user) throws Exception {
+	public static int getProjectSize(String user) throws Exception {
 		ProjectDAO DAOSelect2 = new ProjectDAO();
 		int i = DAOSelect2.howManyProjects(user);
 		return i;
@@ -84,12 +85,12 @@ public class Project {
 		DAOdelete.deleteProject(projectName);
 	}
 	
-	public static String getProjectInfo(String projectName, int i) throws Exception {
+	public static ArrayList<Object> getProjectInfo(String projectName) throws Exception {
 		ProjectDAO DAOget = new ProjectDAO();
-		String[] data = new String[2];
+		ArrayList<Object> data = new ArrayList<Object>();
 		data = DAOget.getProjectInfo(projectName);
 		System.out.println(4);
-		return data[i];
+		return data;
 	}
 	
 	

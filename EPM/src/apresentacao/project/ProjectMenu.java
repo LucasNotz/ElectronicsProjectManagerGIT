@@ -95,7 +95,7 @@ public class ProjectMenu {
 		listProjects.setFont(new Font("Serif", Font.BOLD, 20));
 		listProjects.setModel(dlm2);
 		pn.add(jspProjects);
-		for (int i = 0; i < Project.getProjectSizes(user); i++) {
+		for (int i = 0; i < Project.getProjectSize(user); i++) {
 				dlm2.add(i, "NAME: " + Project.select(user, i, 0));
 
 		}
@@ -142,7 +142,7 @@ public class ProjectMenu {
 					}
 					dlm2.removeAllElements();
 					try {
-						for (int i = 0; i < Project.getProjectSizes(user); i++) {
+						for (int i = 0; i < Project.getProjectSize(user); i++) {
 							dlm2.add(i, "NAME: " + Project.select(user, i, 0));
 						}
 					} catch (Exception e1) {
