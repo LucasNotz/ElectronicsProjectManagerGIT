@@ -1,24 +1,10 @@
 package negocio;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 
-/**
- * Essa classe é a Projeto
- *  - Modelo para as projetos
- *  - Overview
- *  	
- *  Propriedades
- *  
- *  Metodos construtores
- *  
- *  Metodos de acesso
- *  
- *  Metodos da classe
- *  
- *  	getTodos()
- */
+import persistencia.ProjectDAO;
+
 
 public class Project {
 	
@@ -26,8 +12,8 @@ public class Project {
 	
 	private String nome = "";
 	private double orcamento = 0;
-	private Date data = null;
 	private String[] parts = {};
+	private String user = "";
 	
 	//métodos construtores
 	
@@ -35,12 +21,12 @@ public class Project {
 		super();
 	}
 
-	public Project(String nome, double orcamento, Date data, String[] parts) {
+	public Project(String nome, double orcamento, String[] parts, String user) {
 		super();
 		this.nome = nome;
 		this.orcamento = orcamento;
-		this.data = data;
 		this.parts = parts;
+		this.user = user;
 	}
 
 	//métodos de acesso 
@@ -61,12 +47,12 @@ public class Project {
 		this.orcamento = orcamento;
 	}
 
-	public Date getData() {
-		return data;
+	public String getUser() {
+		return user;
 	}
 
-	public void setData(Date data) {
-		this.data = data;
+	public void setUser(String user) {
+		this.user = user;
 	}
 
 	public String getPart(int i) {
@@ -81,16 +67,31 @@ public class Project {
 	
 	//persistir a ser adicionado
 	
-	//not sure if this is necessary
-	public Collection<String> getTodos() throws Exception {
-		ArrayList<String> allParts = new ArrayList<String>();
-		for(String part : this.parts) {
-			allParts.add(part);
-		}
-		return allParts;
+	public static String select(String user,int i, int j) throws Exception {
+		ProjectDAO DAOSelect = new ProjectDAO();
+		String[][] projectData = DAOSelect.select(user);
+		return projectData[i][j];
+	}
+
+	
+	public static int getProjectSize(String user) throws Exception {
+		ProjectDAO DAOSelect2 = new ProjectDAO();
+		int i = DAOSelect2.howManyProjects(user);
+		return i;
 	}
 	
+	public static void deleteProjeto(String projectName) throws Exception {
+		ProjectDAO DAOdelete = new ProjectDAO();
+		DAOdelete.deleteProject(projectName);
+	}
 	
+	public static ArrayList<Object> getProjectInfo(String projectName) throws Exception {
+		ProjectDAO DAOget = new ProjectDAO();
+		ArrayList<Object> data = new ArrayList<Object>();
+		data = DAOget.getProjectInfo(projectName);
+		System.out.println(4);
+		return data;
+	}
 	
 	
 }

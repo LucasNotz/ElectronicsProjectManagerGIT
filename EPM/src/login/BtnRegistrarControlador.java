@@ -96,6 +96,8 @@ public class BtnRegistrarControlador implements ActionListener {
 				
 			} else {
 				//if not equal and/or cases not equal
+				lblLoginRegisterStatus.setText("Usuário já existe");
+				lblLoginRegisterStatus.setForeground(Color.RED);
 				return;
 			}
 			

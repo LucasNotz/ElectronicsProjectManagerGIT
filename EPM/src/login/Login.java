@@ -3,31 +3,25 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.util.Scanner;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-/**
- * Essa é a classe de Login
- * 	-Inicio do programa (PSVM)
- * 	- Overview da classe
- * 
- * Propriedade da classe
- * 
- * 
- * Login() - construtor do gui
- * 
- * Controladores
- * 
- */
+import persistencia.Database;
 
 public class Login {
 	
 	//propriedades da classe
-	private JFrame fLogin = new JFrame(); //Frame
+	private static JFrame fLogin = new JFrame(); //Frame
 	private JPanel pn = new JPanel(); //Painel
 	private JLabel lblTitulo = new JLabel("Projeto HUB"); //Título
 	
@@ -44,6 +38,7 @@ public class Login {
 	private JButton btnRegistrar = new JButton("Registrar");
 	private JButton btnSair = new JButton("Sair");
 	private JButton btnLimpar = new JButton("Limpar");
+	private JButton btnDatabase = new JButton("Database settings");
 	
 	//login status
 	private JLabel lblLoginRegisterStatus = new JLabel("");
@@ -58,7 +53,45 @@ public class Login {
 		this.fLogin = fLogin;
 	}
 	
+	//main method, whole program starts here
+	private static Connection objConexaoTestLogin = null;
+	private static int result = 0;
+	private static String defaultConn = ""; //get from default connection.txt
 	
+	public static void main(String[] args) {
+		new Login();
+		Login.fLogin.setVisible(true);
+		File file = new File("default connection.txt");
+
+		try (Scanner myReader = new Scanner(file)){
+				defaultConn = myReader.nextLine();
+
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		////////////////////////////////////////
+		try {
+			System.out.println(defaultConn);
+			objConexaoTestLogin = DriverManager.getConnection(defaultConn);
+			result++;
+			objConexaoTestLogin.close();
+			System.out.println(defaultConn + "burh");
+			Database.setLblConn(new JLabel(defaultConn));
+		} catch (Exception ex1) {
+			ex1.printStackTrace();
+		} 
+
+		//define resultados para campo de verificacao de conexao
+		if (result == 0) {
+			JOptionPane.showMessageDialog(null, "Connection cannot be established");
+			System.out.println(defaultConn);
+			fLogin.setVisible(false);
+			new Database().getfBanco().setVisible(true);
+		} else {
+			JOptionPane.showMessageDialog(null, "Connected to database");
+			//conexao bem sucedia ->tela de login
+		}
+	}
 	
 	//Construtor do GUI de login
 	public Login() {
@@ -147,6 +180,17 @@ public class Login {
 			}
 		});
 		
+		//database setting btn
+		btnDatabase.setBounds(800,700,200,20);
+		btnDatabase.setFont(new Font("Serif", Font.BOLD, 15));
+		pn.add(btnDatabase);
+		btnDatabase.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				new Database().getfBanco().setVisible(true);
+				Login.fLogin.setVisible(false);
+			}
+		});
 	}
 
 
