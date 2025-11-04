@@ -2,6 +2,8 @@ package apresentacao.project;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -13,10 +15,12 @@ import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
+import apresentacao.part.PartMenu;
 import negocio.Project;
 
 public class ProjectMenu {
@@ -40,7 +44,8 @@ public class ProjectMenu {
 	private JButton btnMudar = new JButton("Alterar");
 	private JButton btnRemover = new JButton("Remover");
 	private JLabel lblPreview = new JLabel("Preview");
-	private JLabel aPreview = new JLabel("");
+	private JTextArea aPreview = new JTextArea();
+	private JScrollPane jspPreview = new JScrollPane(aPreview);
 	
 	
 
@@ -57,6 +62,13 @@ public class ProjectMenu {
 		barraMenu.add(menuOpcao);
 		menuOpcao.add(menuItem); //a ser ativado
 		menuOpcao.add(menuItem2); //inativo por agora
+		
+		menuItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new PartMenu(user).fPartMenu().setVisible(true);
+				fProjectMenu.setVisible(false);
+			}
+		});
 		
 		pn.setLayout(null);
 		pn.setBackground(Color.white);
@@ -83,11 +95,8 @@ public class ProjectMenu {
 		listProjects.setFont(new Font("Serif", Font.BOLD, 20));
 		listProjects.setModel(dlm2);
 		pn.add(jspProjects);
-		//int k = 0;
-		for (int i = 0; i < Project.getProjectSizes(); i++) {
-				dlm2.add(i, 
-						"NAME: " + Project.select(i, 0) + " | BUDGET: " + Project.select(i, 1) + " | DUE DATE: " + Project.select(i, 3) + "\n" 
-						);
+		for (int i = 0; i < Project.getProjectSizes(user); i++) {
+				dlm2.add(i, "NAME: " + Project.select(user, i, 0));
 
 		}
 		
@@ -95,6 +104,16 @@ public class ProjectMenu {
 		btnVer.setBounds(150,420,200,60);
 		btnVer.setFont(new Font("Serif", Font.PLAIN, 25));
 		pn.add(btnVer);
+		btnVer.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					new ProjectView(user, dlm2.getElementAt(listProjects.getSelectedIndex()).substring(5)).getJFrame().setVisible(true);
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+				fProjectMenu.setVisible(false);
+			}
+		});
 		
 		btnAdicionar.setBounds(380,420,200,60);
 		btnAdicionar.setFont(new Font("Serif", Font.PLAIN, 25));
@@ -108,23 +127,49 @@ public class ProjectMenu {
 		btnRemover.setFont(new Font("Serif", Font.PLAIN, 25));
 		pn.add(btnRemover);
 		
+		int confirm = 0;
+		btnRemover.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int confirm = JOptionPane.showConfirmDialog(null, "Deletar projeto?", "Confimrar", JOptionPane.YES_NO_OPTION);
+				
+				if (confirm == JOptionPane.YES_OPTION) {
+					JOptionPane.showMessageDialog(null, "Projeto deletado");
+					try {
+						Project.deleteProjeto(dlm2.getElementAt(listProjects.getSelectedIndex()).substring(5));
+						System.out.println(dlm2.getElementAt(listProjects.getSelectedIndex()).substring(6));
+					} catch (Exception e1) {
+						e1.printStackTrace();
+					}
+					dlm2.removeAllElements();
+					try {
+						for (int i = 0; i < Project.getProjectSizes(user); i++) {
+							dlm2.add(i, "NAME: " + Project.select(user, i, 0));
+						}
+					} catch (Exception e1) {
+						e1.printStackTrace();
+					}
+				} else if (confirm == JOptionPane.NO_OPTION) {
+					JOptionPane.showMessageDialog(null, "Processo cancelado");
+				}
+			}
+		});
+		
 		//preview display config
 		lblPreview.setBounds(150,500, 300,40);
 		lblPreview.setFont(new Font("Serif", Font.ITALIC, 30));
 		pn.add(lblPreview);
 		
-		aPreview.setBounds(150,200,900,200);
-		//aPreview.setLineWrap(true);
-		//aPreview.setWrapStyleWord(true);
-		pn.add(aPreview);
-		
+		jspPreview.setBounds(150,550,900,150);
+		pn.add(jspPreview);
+
 		listProjects.setSelectedIndex(0);
 		listProjects.addMouseListener(new MouseListener() {
 			public void mouseClicked(MouseEvent e) {
 				System.out.println(listProjects.getSelectedIndex());
 				try {
-					aPreview.setText(Project.select(listProjects.getSelectedIndex(), 4));
-				} catch (Exception e1) {
+					aPreview.setText(Project.select(user,listProjects.getSelectedIndex(), 2));
+					aPreview.setFont(new Font("Serif", Font.ITALIC, 20));
+					} catch (Exception e1) {
 					e1.printStackTrace();
 				}
 			}

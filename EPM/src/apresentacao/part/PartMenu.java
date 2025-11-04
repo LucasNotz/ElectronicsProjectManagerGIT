@@ -2,6 +2,8 @@ package apresentacao.part;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
@@ -12,6 +14,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
+import apresentacao.project.ProjectMenu;
 import negocio.Part;
 //copiei e colei pq tinha collocado um elemento errado mas decidi deixar mas nao via ser assim
 public class PartMenu {
@@ -30,7 +33,7 @@ public class PartMenu {
 	
 
 	
-	public PartMenu() {
+	public PartMenu(String user) {
 		//frame config
 		fPartMenu.setTitle("Menu Projetos");
 		fPartMenu.setSize(1200,800);
@@ -43,6 +46,17 @@ public class PartMenu {
 		menuOpcao.add(menuItem); //a ser ativado
 		menuOpcao.add(menuItem2); //inativo por agora
 		
+		menuItem2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					new ProjectMenu(user).fProjectMenu().setVisible(true);
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+				fPartMenu.setVisible(false);
+			}
+		});
+		
 		pn.setLayout(null);
 		pn.setBackground(Color.white);
 		fPartMenu.add(pn);
@@ -51,6 +65,7 @@ public class PartMenu {
 		lblTitulo.setFont(new Font("Serif", Font.BOLD, 40));
 		pn.add(lblTitulo);
 		
+		lblTituloUser.setText(user);
 		lblTituloUser.setBounds(620,40,500,65);
 		lblTituloUser.setFont(new Font("Serif", Font.BOLD, 40));
 		pn.add(lblTituloUser);

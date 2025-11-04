@@ -2,7 +2,7 @@ package negocio;
 
 import java.util.Date;
 
-import persistencia.ProjectDAOSelect;
+import persistencia.ProjectDAO;
 
 
 public class Project {
@@ -11,8 +11,8 @@ public class Project {
 	
 	private String nome = "";
 	private double orcamento = 0;
-	private Date data = null;
 	private String[] parts = {};
+	private String user = "";
 	
 	//métodos construtores
 	
@@ -20,12 +20,12 @@ public class Project {
 		super();
 	}
 
-	public Project(String nome, double orcamento, Date data, String[] parts) {
+	public Project(String nome, double orcamento, String[] parts, String user) {
 		super();
 		this.nome = nome;
 		this.orcamento = orcamento;
-		this.data = data;
 		this.parts = parts;
+		this.user = user;
 	}
 
 	//métodos de acesso 
@@ -46,12 +46,12 @@ public class Project {
 		this.orcamento = orcamento;
 	}
 
-	public Date getData() {
-		return data;
+	public String getUser() {
+		return user;
 	}
 
-	public void setData(Date data) {
-		this.data = data;
+	public void setUser(String user) {
+		this.user = user;
 	}
 
 	public String getPart(int i) {
@@ -66,16 +66,30 @@ public class Project {
 	
 	//persistir a ser adicionado
 	
-	public static String select(int i, int j) throws Exception {
-		ProjectDAOSelect DAOSelect = new ProjectDAOSelect();
-		String[][] projectData = DAOSelect.select();
+	public static String select(String user,int i, int j) throws Exception {
+		ProjectDAO DAOSelect = new ProjectDAO();
+		String[][] projectData = DAOSelect.select(user);
 		return projectData[i][j];
 	}
+
 	
-	public static int getProjectSizes() throws Exception {
-		ProjectDAOSelect DAOSelect2 = new ProjectDAOSelect();
-		int i = DAOSelect2.howManyProjects();
+	public static int getProjectSizes(String user) throws Exception {
+		ProjectDAO DAOSelect2 = new ProjectDAO();
+		int i = DAOSelect2.howManyProjects(user);
 		return i;
+	}
+	
+	public static void deleteProjeto(String projectName) throws Exception {
+		ProjectDAO DAOdelete = new ProjectDAO();
+		DAOdelete.deleteProject(projectName);
+	}
+	
+	public static String getProjectInfo(String projectName, int i) throws Exception {
+		ProjectDAO DAOget = new ProjectDAO();
+		String[] data = new String[2];
+		data = DAOget.getProjectInfo(projectName);
+		System.out.println(4);
+		return data[i];
 	}
 	
 	

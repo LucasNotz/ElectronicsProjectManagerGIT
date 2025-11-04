@@ -29,17 +29,11 @@ public class UserDAOInsert {
 		
 		//insere no banco
 		objExecucao = objBanco.getObjConexao().prepareStatement(
-				"insert into U_USER (U_username, U_password,U_date) values"
-				+ "(?,?,?)"
+				"insert into U_USER (U_username, U_password) values"
+				+ "(?,?)"
 				);
 		objExecucao.setString(1, objUser.getUsername());
 		objExecucao.setString(2, objUser.getPassword());
-		try {
-			LocalDate myObj = LocalDate.now();
-			objExecucao.setString(3, myObj.toString());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 		//insere no banco
 		objExecucao.executeUpdate();
 		objBanco.desconectar();
