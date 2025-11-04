@@ -2,6 +2,8 @@ package apresentacao.project;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -38,7 +40,7 @@ public class ProjectMenu {
 	private JButton btnMudar = new JButton("Alterar");
 	private JButton btnRemover = new JButton("Remover");
 	private JLabel lblPreview = new JLabel("Preview");
-	private JTextArea aPreview = new JTextArea();
+	private JLabel aPreview = new JLabel("");
 	
 	
 
@@ -77,15 +79,16 @@ public class ProjectMenu {
 		lblProjeto.setFont(new Font("Serif", Font.ITALIC, 30));
 		pn.add(lblProjeto);
 		
-		jspProjects.setBounds(150,200,900,200);
+		jspProjects.setBounds(150,210,900,200);
+		listProjects.setFont(new Font("Serif", Font.BOLD, 20));
 		listProjects.setModel(dlm2);
 		pn.add(jspProjects);
-		int k = 0;
+		//int k = 0;
 		for (int i = 0; i < Project.getProjectSizes(); i++) {
-			for (int j = 0; j < 5; j ++) {
-				dlm2.add(k, Project.select(i, j));
-				k++;
-			}
+				dlm2.add(i, 
+						"NAME: " + Project.select(i, 0) + " | BUDGET: " + Project.select(i, 1) + " | DUE DATE: " + Project.select(i, 3) + "\n" 
+						);
+
 		}
 		
 		//buttons config
@@ -111,11 +114,30 @@ public class ProjectMenu {
 		pn.add(lblPreview);
 		
 		aPreview.setBounds(150,200,900,200);
+		//aPreview.setLineWrap(true);
+		//aPreview.setWrapStyleWord(true);
 		pn.add(aPreview);
 		
-		
-		
-		
+		listProjects.setSelectedIndex(0);
+		listProjects.addMouseListener(new MouseListener() {
+			public void mouseClicked(MouseEvent e) {
+				System.out.println(listProjects.getSelectedIndex());
+				try {
+					aPreview.setText(Project.select(listProjects.getSelectedIndex(), 4));
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+			}
+			public void mousePressed(MouseEvent e) {
+			}
+			public void mouseReleased(MouseEvent e) {
+			}
+			public void mouseEntered(MouseEvent e) {
+			}
+			public void mouseExited(MouseEvent e) {
+			}
+		});
+
 	}
 
 	//métodos de accesso

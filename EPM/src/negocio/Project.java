@@ -4,21 +4,6 @@ import java.util.Date;
 
 import persistencia.ProjectDAOSelect;
 
-/**
- * Essa classe é a Projeto
- *  - Modelo para as projetos
- *  - Overview
- *  	
- *  Propriedades
- *  
- *  Metodos construtores
- *  
- *  Metodos de acesso
- *  
- *  Metodos da classe
- *  
- *  	getTodos()
- */
 
 public class Project {
 	

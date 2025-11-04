@@ -11,24 +11,6 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 import login.Login;
-/**
- *  Esse é a classe controlador do butao de testConnection
- *   - Overview da classe
- *  	
- *  Propriedades
- *  
- *  Construtor
- *  
- *  actionPerformed()
- *  
- *  	try connectar
- *  
- *  	try desconectar
- *  
- *  	reslutados
- *  	
- *  		proxima tela (se sucesso)
- */
 
 public class btnConexaoTestControlador implements ActionListener {
 	
