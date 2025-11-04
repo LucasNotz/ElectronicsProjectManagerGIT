@@ -19,7 +19,7 @@ import apresentacao.part.PartMenu;
 import negocio.Project;
 
 public class ProjectView {
-	private JFrame fPartView = new JFrame();
+	private JFrame fProjectView = new JFrame();
 	private JPanel pn = new JPanel();
 	private JLabel lblUser = new JLabel();
 	private JLabel lblProject = new JLabel();
@@ -34,30 +34,30 @@ public class ProjectView {
 	private JScrollPane jspPreview = new JScrollPane(aDescricaoV,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 	
 	public JFrame getJFrame() {
-		return fPartView;
+		return fProjectView;
 	}
 	
 	public ProjectView(String user, String projectName) throws Exception {
-		fPartView.setTitle("Project View");
-		fPartView.setSize(1200,800);
-		fPartView.setResizable(false);
-		fPartView.setDefaultCloseOperation(fPartView.EXIT_ON_CLOSE);
-		fPartView.setLocationRelativeTo(null);
+		fProjectView.setTitle("Project View");
+		fProjectView.setSize(1200,800);
+		fProjectView.setResizable(false);
+		fProjectView.setDefaultCloseOperation(fProjectView.EXIT_ON_CLOSE);
+		fProjectView.setLocationRelativeTo(null);
 	
-		fPartView.setJMenuBar(barraMenu);
+		fProjectView.setJMenuBar(barraMenu);
 		barraMenu.add(menuOpcao);
 		menuOpcao.add(menuItem); //a ser ativado
 		menuOpcao.add(menuItem2); //inativo por agora
 		
 		pn.setLayout(null);
 		pn.setBackground(Color.white);
-		fPartView.add(pn);
+		fProjectView.add(pn);
 		
 		menuItem2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					new ProjectMenu(user).fProjectMenu().setVisible(true);
-					fPartView.setVisible(false);
+					fProjectView.setVisible(false);
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
@@ -68,7 +68,7 @@ public class ProjectView {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					new PartMenu(user).fPartMenu().setVisible(true);
-					fPartView.setVisible(false);
+					fProjectView.setVisible(false);
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}

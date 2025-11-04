@@ -4,6 +4,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import persistencia.PartDAO;
+
 /**
  * Essa classe é a Part
  *  - Modelo para as partes 
@@ -90,7 +92,7 @@ public class Part {
 	
 	//cirar métodos persistir
 	
-	public static Collection<String> getTodos() throws Exception {
+	public static Collection<String> getTodosS() throws Exception {
 		ArrayList<String> type = new ArrayList<String>();
 		type.add("Ressitor");
 		type.add("Capacitor");
@@ -105,9 +107,14 @@ public class Part {
 		type.add("Conversor DA");
 		
 		return type;
+		
 	}
 
-	
-	
+	public static String[][] getAllParts() throws Exception {
+		String[][] data = null;
+		PartDAO PartDAO = new PartDAO();
+		data = PartDAO.getAllParts();
+		return data;
+	}
 	
 }

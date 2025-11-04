@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
@@ -13,6 +14,8 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 
 import apresentacao.project.ProjectMenu;
 import negocio.Part;
@@ -23,13 +26,17 @@ public class PartMenu {
 	private JPanel pn = new JPanel();
 	private JLabel lblTitulo = new JLabel("Logged in as: ");
 	private JLabel lblTituloUser = new JLabel("Temporary");
-	private JLabel lblProjeto = new JLabel("Projetos");
+	private JLabel lblProjeto = new JLabel("Partes");
 	private JMenuBar barraMenu = new JMenuBar();
 	private JMenu menuOpcao = new JMenu("Navegar");
 	private JMenuItem menuItem = new JMenuItem("Menu Partes");
 	private JMenuItem menuItem2 = new JMenuItem("Menu Projetos");
 	private DefaultListModel<String> lstModelParts = new DefaultListModel<String>();
-	private JList<String> lstParts = null;
+	private JList<String> lstParts = new JList<String>();;
+	private JScrollPane jspParts = new JScrollPane(lstParts);
+	private JLabel lblPreview = new JLabel("Preview");
+	private JTextArea aPreview = new JTextArea();
+	private JScrollPane jspPreview = new JScrollPane(aPreview);
 	
 
 	
@@ -72,22 +79,40 @@ public class PartMenu {
 		
 		lblProjeto.setBounds(150, 150, 200, 45);
 		lblProjeto.setFont(new Font("Serif", Font.PLAIN, 30));
-		pn.add(lblProjeto);
+		pn.add(lblProjeto);		
 		
+		String[][] data = null;
+		try {
+			data = Part.getAllParts();
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		try {
 			int i = 0;
-			for(String part : Part.getTodos()) {
-				lstModelParts.add(i++, part);
+			for(i = 0; i < data.length; i++ ) {
+
+				lstModelParts.add(i, data[i][0]);
+				
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
-		lstParts = new JList<String>(lstModelParts);
+		lstParts.setModel(lstModelParts);
+		lstParts.setFont(new Font("Serif", Font.BOLD, 20));
+		jspParts.setBounds(150, 200, 400, 250);
+		pn.add(jspParts);
 		
-		lstParts.setBounds(150, 200, 200,200);
-		pn.add(lstParts);
+		lblPreview.setBounds(150,500, 300,40);
+		lblPreview.setFont(new Font("Serif", Font.ITALIC, 30));
+		pn.add(lblPreview);
 		
+		aPreview.setLineWrap(true);
+		jspPreview.setBounds(150,550,900,150);
+		pn.add(jspPreview);
+		
+
 	}
 
 	//métodos de accesso
