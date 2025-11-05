@@ -27,4 +27,20 @@ public class PartDAO {
 		objBanco.desconectar();
 		return info;
 	}
+	
+	public String[][] getPartInfo() throws  Exception {
+		objBanco.conectar();
+		String[][] info = new String[100][10];
+		objExecucao = objBanco.getObjConexao().prepareStatement(
+				"Select * from PA_PART");
+		int i = 0;
+		objCursor = objExecucao.executeQuery();
+		
+		while (objCursor.next()) {
+			info[i][0] = objCursor.getString("PA_name");
+			i++;
+		}
+		objBanco.desconectar();
+		return info;
+	}
 }

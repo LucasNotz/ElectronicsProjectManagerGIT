@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
 import javax.swing.DefaultListModel;
@@ -85,7 +87,6 @@ public class PartMenu {
 		try {
 			data = Part.getAllParts();
 		} catch (Exception e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		try {
@@ -103,6 +104,25 @@ public class PartMenu {
 		lstParts.setFont(new Font("Serif", Font.BOLD, 20));
 		jspParts.setBounds(150, 200, 400, 250);
 		pn.add(jspParts);
+		
+		jspParts.addMouseListener(new MouseListener() {
+			public void mouseClicked(MouseEvent e) {
+				try {
+					aPreview.setText(Part.getPart(lstParts.getSelectedIndex())[2].toString());
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+			}
+			public void mousePressed(MouseEvent e) {	
+			}
+			public void mouseReleased(MouseEvent e) {
+			}
+			public void mouseEntered(MouseEvent e) {
+			}
+			public void mouseExited(MouseEvent e) {
+			}
+			
+		});
 		
 		lblPreview.setBounds(150,500, 300,40);
 		lblPreview.setFont(new Font("Serif", Font.ITALIC, 30));
