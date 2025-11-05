@@ -117,11 +117,11 @@ public class Part {
 		return data;
 	}
 	
-	public static String[] getPart(int i) throws Exception {
+	public static String getPart(int i,int j) throws Exception {
 		String[][] data = null;
 		PartDAO PartDAO = new PartDAO();
-		data = PartDAO.getAllParts();
-		return data[i];
+		data = PartDAO.getPartInfo();
+		return data[i][j];
 	}
 	
 }

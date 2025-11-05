@@ -45,7 +45,7 @@ public class ProjectMenu {
 	private JButton btnRemover = new JButton("Remover");
 	private JLabel lblPreview = new JLabel("Preview");
 	private JTextArea aPreview = new JTextArea();
-	private JScrollPane jspPreview = new JScrollPane(aPreview);
+	private JScrollPane jspPreview = new JScrollPane(aPreview, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 	
 	
 
@@ -106,6 +106,9 @@ public class ProjectMenu {
 		pn.add(btnVer);
 		btnVer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				if (listProjects.getSelectedIndex() == -1) {
+					return;
+				}
 				try {
 					new ProjectView(user, dlm2.getElementAt(listProjects.getSelectedIndex()).substring(5)).getJFrame().setVisible(true);
 				} catch (Exception e1) {
@@ -164,6 +167,7 @@ public class ProjectMenu {
 
 		listProjects.setSelectedIndex(0);
 		aPreview.setLineWrap(true);
+		aPreview.setEditable(false);
 		listProjects.addMouseListener(new MouseListener() {
 			public void mouseClicked(MouseEvent e) {
 				System.out.println(listProjects.getSelectedIndex());

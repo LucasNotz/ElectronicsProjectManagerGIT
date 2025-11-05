@@ -38,8 +38,8 @@ public class PartMenu {
 	private JScrollPane jspParts = new JScrollPane(lstParts);
 	private JLabel lblPreview = new JLabel("Preview");
 	private JTextArea aPreview = new JTextArea();
-	private JScrollPane jspPreview = new JScrollPane(aPreview);
-	
+	private JScrollPane jspPreview = new JScrollPane(aPreview, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+
 
 	
 	public PartMenu(String user) {
@@ -105,10 +105,13 @@ public class PartMenu {
 		jspParts.setBounds(150, 200, 400, 250);
 		pn.add(jspParts);
 		
-		jspParts.addMouseListener(new MouseListener() {
+		lstParts.addMouseListener(new MouseListener() {
 			public void mouseClicked(MouseEvent e) {
+				System.out.println(1);
 				try {
-					aPreview.setText(Part.getPart(lstParts.getSelectedIndex())[2].toString());
+					aPreview.setText(Part.getPart(lstParts.getSelectedIndex(), 2));
+					aPreview.setFont(new Font("Serif", Font.ITALIC, 20));
+
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
@@ -129,6 +132,7 @@ public class PartMenu {
 		pn.add(lblPreview);
 		
 		aPreview.setLineWrap(true);
+		aPreview.setEditable(false);
 		jspPreview.setBounds(150,550,900,150);
 		pn.add(jspPreview);
 		

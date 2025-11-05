@@ -38,6 +38,8 @@ public class PartDAO {
 		
 		while (objCursor.next()) {
 			info[i][0] = objCursor.getString("PA_name");
+			info[i][1] = objCursor.getString("PA_price");
+			info[i][2] = objCursor.getString("PA_description");
 			i++;
 		}
 		objBanco.desconectar();
