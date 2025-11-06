@@ -4,21 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 
-/**
- * Essa classe é a Part
- *  - Modelo para as partes 
- *  - Overview
- *  	
- *  Propriedades
- *  
- *  Metodos construtores
- *  
- *  Metodos de acesso
- *  
- *  Metodos da classe
- *  
- *  	getTodos()
- */
+import persistencia.PartDAO;
 
 public class Part {
 	
@@ -90,7 +76,7 @@ public class Part {
 	
 	//cirar métodos persistir
 	
-	public static Collection<String> getTodos() throws Exception {
+	public static Collection<String> getTodosS() throws Exception {
 		ArrayList<String> type = new ArrayList<String>();
 		type.add("Ressitor");
 		type.add("Capacitor");
@@ -105,9 +91,21 @@ public class Part {
 		type.add("Conversor DA");
 		
 		return type;
+		
 	}
 
+	public static String[][] getAllParts() throws Exception {
+		String[][] data = null;
+		PartDAO PartDAO = new PartDAO();
+		data = PartDAO.getAllParts();
+		return data;
+	}
 	
-	
+	public static String getPart(int i,int j) throws Exception {
+		String[][] data = null;
+		PartDAO PartDAO = new PartDAO();
+		data = PartDAO.getPartInfo();
+		return data[i][j];
+	}
 	
 }

@@ -9,38 +9,14 @@ import javax.swing.JTextField;
 
 import negocio.User;
 
-/**
- *  Esse é a classe controlador do butao de registrar
- *   - Overview da classe
- *  	
- *  Propriedades
- *  
- *  Propriedade a ser buscada
- *  
- *  Construtor
- *  
- *  actionPerformed()
- *  	
- *  	critica de dados
- *  
- *  	verificar existencia do usuario a ser registrado
- *  
- *  	regatar senha digitada
- *  
- *  	pedir confirmacao
- *  
- */
-
 public class BtnRegistrarControlador implements ActionListener {
-
-	//propriedade da classe
+	//Class variables
 	private JTextField txtUser = null;
 	private JTextField txtSenha = null;
 	private JLabel lblLoginRegisterStatus = null;
 	private String userBuscado = "";
 
-	
-	//construtor
+	//Constructor function
 	public BtnRegistrarControlador(JTextField txtUser, JTextField txtSenha, JLabel lblLoginRegisterStatus) {
 		this.txtUser = txtUser;
 		this.txtSenha = txtSenha;
@@ -48,7 +24,7 @@ public class BtnRegistrarControlador implements ActionListener {
 	}
 	
 	public void actionPerformed(ActionEvent e) {
-		//crítica de dados
+		//Data critique
 		if(txtUser.getText().equals("")) {
 			JOptionPane.showMessageDialog(null, "campo usuario obrigatorio");
 			return;
@@ -59,7 +35,7 @@ public class BtnRegistrarControlador implements ActionListener {
 			return;
 		}
 		
-		//verificar se ja existe usuário com esse nome
+		//Check if user name exists
 		try {
 			//if returns "" then login does not exist -- in this case this is what i want
 			//if it returns itself the if matches and login exists -- not what i want
@@ -67,45 +43,38 @@ public class BtnRegistrarControlador implements ActionListener {
 			// ou seja só existe uma variacao para cada conjunto de caracters
 			// ABC -> abc | aBC -> abc |
 			userBuscado = User.resgatar(txtUser.getText(),0);
-			
-			//System.out.println(userBuscado);
-			//System.out.println(txtUser.getText());
-			
-			//explicacao acima
+
 			if(userBuscado.equals("")) {
 				
 				int confirm = JOptionPane.showConfirmDialog(null, "Registrar usuário?", "Confimrar", JOptionPane.YES_NO_OPTION);
 				
-				//pedido de confirmacao
+				//Ask for confirmation
 				if (confirm == JOptionPane.YES_OPTION) {
 					JOptionPane.showMessageDialog(null, "Usuário criado");
-					//inserir no banco de dados
+					
+					//Insert new user into database
 					User objUser = new User();
 					objUser.setUsername(txtUser.getText());
 					objUser.setPassword(txtSenha.getText());
 					objUser.persistir();
 					lblLoginRegisterStatus.setText("Usuário novo criado");
 					lblLoginRegisterStatus.setForeground(Color.GREEN);
-					
-					
+	
 				} else if (confirm == JOptionPane.NO_OPTION) {
 					JOptionPane.showMessageDialog(null, "Processo cancelado");
 					lblLoginRegisterStatus.setText("");
 				}
-				
-				
+			
 			} else {
 				//if not equal and/or cases not equal
 				lblLoginRegisterStatus.setText("Usuário já existe");
 				lblLoginRegisterStatus.setForeground(Color.RED);
 				return;
 			}
-			
+
 		} catch (Exception e1) {
 			e1.printStackTrace();
 			System.out.println(1);
 		}
-
 	}
-
 }

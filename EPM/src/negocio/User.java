@@ -1,35 +1,13 @@
 package negocio;
 
-import persistencia.UserDAOInsert;
-import persistencia.UserDAOSelect;
-
-/**
- * Essa classe é a User
- *  - Modelo para as users
- *  - Overview
- *  	
- *  Propriedades
- *  
- *  Metodos construtores
- *  
- *  Metodos de acesso
- *  
- *  Metodos da classe
- *  
- *  	resgatar()
- *  
- *  	persistir()
- */
+import persistencia.UserDAO;
 
 public class User {
-	
-	//propriedades da classe
-	
+	//Class variables
 	private String username = "";
 	private String password = "";
-	
-	//métodos construtores
-	
+
+	//Constructor functions
 	public User() {
 		super();
 	}
@@ -40,8 +18,7 @@ public class User {
 		this.password = password;
 	}
 	
-	//métodos de acesso
-	
+	//Access functions
 	public String getUsername() {
 		return this.username;
 	}
@@ -57,29 +34,18 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+
+	//Class functions
 	
-	//métodos da classe
-	
-	//resgatar credenciais do banco de dados
-	
+	//Get user info from database
 	public static String resgatar(String username, int i) throws Exception {
-		UserDAOSelect selectDAO = new UserDAOSelect();	
+		UserDAO selectDAO = new UserDAO();	
 		String[] credenciais = selectDAO.select(username);
-		
 		return credenciais[i];
 	}
 	
-	//registrar no bd
-	
+	//Insert user info into database
 	public void persistir() throws Exception{
-		new UserDAOInsert().insert(this);
+		new UserDAO().insert(this);
 	}
-	
-	
-	
-	
-	
 }
-
-
-

@@ -25,133 +25,134 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
 public class Database {
-	
-	//propriedades da classe
-	
+	//Class variables
 	public Connection objConexao = null;
 	
-	//propriedade para gui
+	//GUI variables
 	
-	//panel e frame
+	//Frame and Panel
 	private JFrame fBanco = new JFrame();
+	private JPanel pn = new JPanel();
 	
+	//Get frame
 	public JFrame getfBanco() {
 		return fBanco;
 	}
 	
-	private JPanel pn = new JPanel();
-	
-	//banco de dados nome 
+	//Database name
 	private JLabel lblBanco = new JLabel("Insert database name:");
 	private JTextField txtBanco = new JTextField();
 	
-	//banco de dados ip address
+	//Database Internet Protocol
 	private JLabel lblAddress = new JLabel("Insert ip: ");
 	private JTextField txtAddress = new JTextField();
 	
-	//banco de dados port address
+	//Database port
 	private JLabel lblPort = new JLabel("Insert port: ");
 	private JTextField txtPort = new JTextField();
 	
-	//banco de dados user
+	//Database user
 	private JLabel lblUser = new JLabel("Insert username: ");
 	private JTextField txtUser = new JTextField();
 
-	//banco de dados password
+	//Database password
 	private JLabel lblPassword = new JLabel("Insert password: ");
 	private JTextField txtPassword = new JTextField();
 
-	//buttons regarding connection
-	private JButton btnTestString = new JButton("Set connection");
-	private JButton btnCon = new JButton("Connect");
+	//Database connection buttons
+	private JButton btnTestString = new JButton("Set connection"); //set connection string to be used
+	private JButton btnCon = new JButton("Connect"); //use connection string to connect
 	
-	//connection labels
-	private JLabel lblConnFormat = new JLabel(
-			"jdbc:mariadb://<ip>:<port/<database>?user=<user>&password=<password>&serverTimezone=UTC&userSSL=false"
-			);
+	//Database connection labels
+	private JLabel lblConFormato = new JLabel(
+			"jdbc:mariadb://<ip>:<port/<database>?user=<user>&password=<password>&serverTimezone=UTC&userSSL=false");
 
-	static JLabel lblConn = new JLabel();
+	//IMPORTANT: this label value will be the value used for all connections
+	static JLabel lblCon = new JLabel();
 	
-	public static void setLblConn(JLabel lblConn) {
-		Database.lblConn = lblConn;
+	//Used in login.Login.java to set default database connection
+	// IMPORTANT: this function is used to set the default lblCon value that will be used for
+	//            future preset connections (references the first value of "default connections.txt" file)
+	public static void setLblCon(JLabel lblConn) {
+		Database.lblCon = lblConn;
 	}
 	
 	private JLabel lblConnStatus = new JLabel("No connection");
 	
-	//Elements for Saved Connections in 'connections.txt' file
+	//Variables for Saved Connections in 'connections.txt' file
 	private JLabel lblFileConn = new JLabel("Previous connections");
 	private File infoFile = new File("connections.txt");
+	
+	//Display for Saved Connections in 'connections.txt' file
 	private JList<String> listInfo = new JList<String>();
 	private DefaultListModel<String> dlm = new DefaultListModel<String>();
 	private JScrollPane jspInfo = new JScrollPane(listInfo);
 	
-	// same but buttons
+	//Buttons for Saved Connections in 'connections.txt' file
 	private JButton btnSelectConn = new JButton("Use Connection");
 	private JButton btnSaveConn = new JButton("Save connection");
 	private JButton btnRemoveConn = new JButton("Remove Connection");
 	private JButton btnRefreshConn = new JButton("Refresh Connection");
 	
-	//Elements for Default connection in 'default onnection.txt' file
+	//Variables for Default connection in 'default onnection.txt' file
 	private JLabel lblFileConnDefault = new JLabel("Default connections");
 	private File infoFileDefault = new File("default connection.txt");
+	
+	//Display for Saved Connections in 'default onnection.txt' file
 	private JList<String> listInfoDefualt = new JList<String>();
 	private DefaultListModel<String> dlmDefault = new DefaultListModel<String>();
 	private JScrollPane jspInfoDefault = new JScrollPane(listInfoDefualt);
 	
+	//Buttons for Default connection in 'default onnection.txt' file
 	private JButton btnSelectConnDefault = new JButton("Use Connection");
 	private JButton btnSaveConnDefault = new JButton("Save connection");
 	private JButton btnRemoveConnDefault = new JButton("Remove Connection");
 	private JButton btnRefreshConnDefault = new JButton("Refresh Connection");
-	//método construtor gui 
-
+	
+	//GUI constructor function
+	@SuppressWarnings("static-access")
 	public Database(){
-		
 		//////////////////////////////////////////////////////////////Beginning of basic element configuration
 		
-		//frame config
+		//Frame configuration
 		fBanco.setTitle("Login do Projeto HUB");
 		fBanco.setSize(1000,500);
 		fBanco.setResizable(false);
 		fBanco.setDefaultCloseOperation(fBanco.EXIT_ON_CLOSE);
 		fBanco.setLocationRelativeTo(null);
 		
-		//panel config
+		//Panel configuration
 		pn.setLayout(null);
 		pn.setBackground(Color.white);
 		fBanco.add(pn);
 		
-		//banco config
+		//Database name configuration (label and text area)
 		lblBanco.setBounds(20,20,200,20);
 		pn.add(lblBanco);
-		
 		txtBanco.setBounds(220,20,200,20);
 		pn.add(txtBanco);
 		
-		//address config
+		//Database Internet Protocol configuration (label and text area)
 		lblAddress.setBounds(20,50,200,20);
 		pn.add(lblAddress);
-		
 		txtAddress.setBounds(220,50,200,20);
 		pn.add(txtAddress);
 		
-		//port config 
+		//Database port configuration (label and text area)
 		lblPort.setBounds(20,80,200,20);
 		pn.add(lblPort);
-		
 		txtPort.setBounds(220,80,200,20);
 		pn.add(txtPort);
 		
-		//user config
+		//Database user configuration (label and text area)
 		lblUser.setBounds(20,110,200,20);
 		pn.add(lblUser);
-		
 		txtUser.setBounds(220,110,200,20);
 		pn.add(txtUser);
 		
-		//password config
+		//Database password configuration (label and text area)
 		lblPassword.setBounds(20,140,200,20);
 		pn.add(lblPassword);
-		
 		txtPassword.setBounds(220,140,200,20);
 		pn.add(txtPassword);
 		
@@ -159,11 +160,11 @@ public class Database {
 		
 		//////////////////////////////////////////////////////////////Beginning of default connection configuration
 		
-		//label for default file conneciton
+		//Label for default file connection
 		lblFileConnDefault.setBounds(730,190,200,20);
 		pn.add(lblFileConnDefault);
 		
-		//jscrollpane/jlist/listmodel for default connection file
+		//Scroll Pane/List/List Model for default connection file
 		jspInfoDefault.setBounds(650,210,300,140);
 		pn.add(jspInfoDefault);
 		listInfoDefualt.setModel(dlmDefault); //list set to default list model
@@ -173,7 +174,7 @@ public class Database {
 		pn.add(btnSaveConnDefault);
 		btnSaveConnDefault.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//crítica de dados
+				//Data critique
 				if (txtBanco.getText().equals("")) {
 					JOptionPane.showMessageDialog(null, "Insert database name");
 					return;
@@ -195,9 +196,9 @@ public class Database {
 					return;
 				}
 				
-				//writes saved connection (lblConn) to the file and goes to next line
+				//Writes saved connection (lblConn) to the file and goes to next line
 				try (FileWriter infoWriter2 = new FileWriter("default connection.txt", true)) {
-					infoWriter2.append(lblConn.getText());
+					infoWriter2.append(lblCon.getText());
 
 				} catch (IOException ex) {
 					ex.printStackTrace();
@@ -205,15 +206,15 @@ public class Database {
 			}
 		});
 		
-		//select connection button
+		//Select connection button
 		btnSelectConnDefault.setBounds(450,260,170,20);
 		pn.add(btnSelectConnDefault);
 		btnSelectConnDefault.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e4) {
 				//try catch to initialize bufferedreader
-				BufferedReader br2 = null;
+				BufferedReader br = null;
 				try {
-					br2 = new BufferedReader(new FileReader(infoFileDefault));
+					br = new BufferedReader(new FileReader(infoFileDefault));
 				} catch (FileNotFoundException e8) {
 					e8.printStackTrace();
 				}
@@ -222,7 +223,7 @@ public class Database {
 				String line2 = null;
 				//checks line until it finds the one that is selected
 				try {
-					while ((line2 = br2.readLine()) != null) {
+					while ((line2 = br.readLine()) != null) {
 						if (line2.trim().equals(selected2)) {
 							//lblConn.setText(selected2);
 							//get address
@@ -240,17 +241,19 @@ public class Database {
 							// temp41[1] // java
 							String[] temp52 = temp42[1].split("=");
 							//temp5[1] //ceub123456
-							System.out.println("IP " + temp12[0]);
-							System.out.println("Port " + temp22[0]);
-							System.out.println("DB name " + temp32[0]);
-							System.out.println("User " + temp412[1]);
-							System.out.println("Password " + temp52[1]);
+							System.out.println("--- Database connection info (Default connection) ---");
+							System.out.println("IP: " + temp12[0]);
+							System.out.println("Port: " + temp22[0]);
+							System.out.println("Database name: " + temp32[0]);
+							System.out.println("User: " + temp412[1]);
+							System.out.println("Password: " + temp52[1]);
 							txtBanco.setText(temp32[0]);
 							txtAddress.setText(temp12[0]);
 							txtPort.setText(temp22[0]);
 							txtUser.setText(temp412[1]);
 							txtPassword.setText(temp52[1]);
-							lblConn.setText("jdbc:mariadb://"+ txtAddress.getText() + ":"+ txtPort.getText() + "/" + txtBanco.getText() 
+							//prepare lblConn
+							lblCon.setText("jdbc:mariadb://"+ txtAddress.getText() + ":"+ txtPort.getText() + "/" + txtBanco.getText() 
 							+"?user="+ txtUser.getText() +"&password=" + txtPassword.getText() + "&serverTimezone=UTC&userSSL=false");
 						}
 					}
@@ -260,34 +263,37 @@ public class Database {
 			}
 		});
 		
-		//remove selected button
+		//Remove selected button
 		btnRemoveConnDefault.setBounds(450,290,170,20);
 		pn.add(btnRemoveConnDefault);
 		btnRemoveConnDefault.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e3) {
+				//Uses function I found online
 				Database.removeLineFromFile(infoFileDefault, listInfoDefualt.getSelectedValue());
 			}
 		});
 		
-		//refresh button
+		//Refresh button
 		btnRefreshConnDefault.setBounds(450,320,170,20);
 		pn.add(btnRefreshConnDefault);
 		btnRefreshConnDefault.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e4) {
+				//Removes so that all can be re-added
 				dlmDefault.removeAllElements();
-				int i2 = 0;
-				try (Scanner myFileScanner2 = new Scanner(infoFileDefault)){
-					while (myFileScanner2.hasNextLine()){
-						String data2 = myFileScanner2.nextLine();
-						dlmDefault.add(i2, data2);
-						i2++;
+				
+				//Adds all elements back
+				int i = 0;
+				try (Scanner myFileScanner = new Scanner(infoFileDefault)){
+					while (myFileScanner.hasNextLine()){
+						String data2 = myFileScanner.nextLine();
+						dlmDefault.add(i, data2);
+						i++;
 					}
 				} catch (IOException e5) {
 					e5.printStackTrace();
 				}
 			}
 		});
-		
 		//////////////////////////////////////////////////////////////End of default connection configuration
 		
 		//////////////////////////////////////////////////////////////////////////////////////////////////
@@ -297,7 +303,7 @@ public class Database {
 		
 		//////////////////////////////////////////////////////////////Beginning of previous connection configuration
 		
-		//jscrollpane/jlist/defaultlistmodel
+		//Scroll Pane/List/Default List Model
 		jspInfo.setBounds(650,30,300,140);
 		pn.add(jspInfo);
 		listInfo.setModel(dlm); 
@@ -311,7 +317,7 @@ public class Database {
 		pn.add(btnSaveConn);
 		btnSaveConn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//crítica de dados
+				//Data critique
 				if (txtBanco.getText().equals("")) {
 					JOptionPane.showMessageDialog(null, "Insert database name");
 					return;
@@ -334,22 +340,22 @@ public class Database {
 				}
 				
 				//writes saved connection (lblConn) to the file and goes to next line
+				//To be resolved: I don't know how to limit the file to have only one 
+				//                value, but it work, I'm pretty sure
 				try (FileWriter infoWriter = new FileWriter("connections.txt", true)) {
-
-					infoWriter.append(lblConn.getText());
-
+					infoWriter.append(lblCon.getText());
 				} catch (IOException ex) {
 					ex.printStackTrace();
 				}
 			}
 		});
 		
-		//select from previous connections button
+		//Select from previous connections button
 		btnSelectConn.setBounds(450,80,170,20);
 		pn.add(btnSelectConn);
 		btnSelectConn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e4) {
-				//try catch to initialize bufferedreader
+				//try catch to initialize buffered reader
 				BufferedReader br = null;
 				try {
 					br = new BufferedReader(new FileReader(infoFile));
@@ -363,7 +369,7 @@ public class Database {
 				try {
 					while ((line = br.readLine()) != null) {
 						if (line.trim().equals(selected)) {
-							lblConn.setText(selected);
+							lblCon.setText(selected);
 							//get address
 							String temp = selected;
 							String[] temp0 = temp.split("//");
@@ -379,6 +385,7 @@ public class Database {
 							// temp41[1] // java
 							String[] temp5 = temp4[1].split("=");
 							//temp5[1] //ceub123456
+							System.out.println("--- Database connection info (Previous connection)---");
 							System.out.println("IP " + temp1[0]);
 							System.out.println("Port " + temp2[0]);
 							System.out.println("DB name " + temp3[0]);
@@ -389,7 +396,7 @@ public class Database {
 							txtPort.setText(temp2[0]);
 							txtUser.setText(temp41[1]);
 							txtPassword.setText(temp5[1]);
-							lblConn.setText("jdbc:mariadb://"+ txtAddress.getText() + ":"+ txtPort.getText() + "/" + txtBanco.getText() 
+							lblCon.setText("jdbc:mariadb://"+ txtAddress.getText() + ":"+ txtPort.getText() + "/" + txtBanco.getText() 
 							+"?user="+ txtUser.getText() +"&password=" + txtPassword.getText() + "&serverTimezone=UTC&userSSL=false");
 						}
 					}
@@ -404,6 +411,7 @@ public class Database {
 		pn.add(btnRemoveConn);
 		btnRemoveConn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e3) {
+				//Uses function I found online
 				Database.removeLineFromFile(infoFile, listInfo.getSelectedValue());
 			}
 		});
@@ -413,7 +421,10 @@ public class Database {
 		pn.add(btnRefreshConn);
 		btnRefreshConn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e4) {
+				//removes all elements 
 				dlm.removeAllElements();
+				
+				//add all element back
 				int i = 0;
 				try (Scanner myFileScanner = new Scanner(infoFile)){
 					while (myFileScanner.hasNextLine()){
@@ -426,7 +437,6 @@ public class Database {
 				}
 			}
 		});
-		
 		//////////////////////////////////////////////////////////////End of previous connection configuration
 		
 		//////////////////////////////////////////////////////////////Beginning of connection visuals
@@ -436,7 +446,7 @@ public class Database {
 		btnTestString.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e6) {
 				//updates value of lblConn
-				lblConn.setText("jdbc:mariadb://"+ txtAddress.getText() + ":"+ txtPort.getText() + "/" + txtBanco.getText() 
+				lblCon.setText("jdbc:mariadb://"+ txtAddress.getText() + ":"+ txtPort.getText() + "/" + txtBanco.getText() 
 				+"?user="+ txtUser.getText() +"&password=" + txtPassword.getText() + "&serverTimezone=UTC&userSSL=false");
 			}
 		});
@@ -444,16 +454,16 @@ public class Database {
 		//test connection/connect button
 		btnCon.setBounds(230, 180, 150,20);
 		pn.add(btnCon);
-		//check connection, atribute new value to lblConn and goes to new page if all works out
-		btnCon.addActionListener(new btnConexaoTestControlador(fBanco, lblConnStatus, lblConn, txtAddress, txtPort, txtBanco, txtUser, txtPassword));
+		//check connection, attribute new value to lblConn and goes to new page if all works out
+		btnCon.addActionListener(new btnConexaoTestControlador(fBanco, lblConnStatus, lblCon));
 		
 		//connection format label
-		lblConnFormat.setBounds(50,370,900,20);
-		pn.add(lblConnFormat);
+		lblConFormato.setBounds(50,370,900,20);
+		pn.add(lblConFormato);
 		
 		//connection to be used label
-		lblConn.setBounds(50,400,900,20);
-		pn.add(lblConn);
+		lblCon.setBounds(50,400,900,20);
+		pn.add(lblCon);
 		
 		//connection status label
 		lblConnStatus.setBounds(150,430,250,20);
@@ -462,27 +472,30 @@ public class Database {
 		
 	}
 	
-	//métodos da classe
+	//Class functions
 	
+	//Get connection object
 	Connection getObjConexao() throws Exception {
 		return objConexao;
 	}
 	
-		//instacia obj conexao e permite utilizar ele sem ter que instanciar a classe
-		//getobjconexao fornece essa informacao
+	//Connect to database + control mechanism
+	static int ic = 0;
 	void conectar() throws Exception {
-		System.out.println(lblConn.getText());
-		objConexao = DriverManager.getConnection(lblConn.getText());
-		//System.out.println(lblConn.getText());
-
+		objConexao = DriverManager.getConnection(lblCon.getText());
+		ic++;
+		System.out.println("Connected to " + lblCon.getText() + " (" + ic + ")");
 	}
 	
-	
+	//Disconnect from database + control mechanism
+	static int idc = 0;
 	void desconectar() throws Exception {
 		objConexao.close();
+		System.out.println("Disconnected from " + lblCon.getText() + " (" + idc + ")");
+		idc++;
 	}
 	
-	//copiado: https://stackoverflow.com/questions/1377279/find-a-line-in-a-file-and-remove-it
+	//Copied from stack overflow: https://stackoverflow.com/questions/1377279/find-a-line-in-a-file-and-remove-it
 	 public static void removeLineFromFile(File file, String lineToRemove) {
 
 		    try {
