@@ -1,6 +1,5 @@
 package login;
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -12,56 +11,18 @@ import javax.swing.JTextField;
 import apresentacao.project.ProjectMenu;
 import negocio.User;
 
-/**
- * Essa é a classe controlador do butao de login
- * 	- Overview da classe
- * 
- *  Propriedades
- *  
- *  Propriedade (a ser buscado do BD)
- *  
- *  Construtor
- *  
- *  actionPerformed()
- *  	
- *  	Critica de dados
- *  		
- *  		campo vazio user
- *  
- *  		campo vazio senha
- *  
- *  	resgatar propriedades do BD
- *  
- *  		Verificar se username existe/está correto
- *  
- *  			Verificar se senha coincide com a registrada
- *  
- *  !Na verificacao do username, a pesquisa no sql é case insensitive, 
- *  !ou seja, ASU AsU asU asu todos funcionam como um usuário, ou seja 
- *  !uma vez que um conjunto de caracteres seja escolhi para o usuário
- *  !esse conjunto não funciona mais. EX: usuario abc -> toda quere no 
- *  !sistema para para o sql como abc, e no BD tem "abc" registrado, 
- *  !entao se alguem tentar registrar ABC, o quere vai como abc e
- *  !retorna que ja existe esse usuário
- *  !--------------------------------------------
- *  !O query da senha funciona com base no username entao esse problema
- *  !nao existe para a senha
- *  
- */
-
 public class BtnLoginControlador implements ActionListener {
-	
-	//propriedades da classe
-	private JFrame fLogin = null; //referenciado para pode descartar o frame mais a frente
+	//Class variables
+	private JFrame fLogin = null; 
 	private JLabel lblLoginRegisterStatus = null;
 	private JTextField txtUser = null;
 	private JTextField txtSenha = null;
 	
-	//informacoes a serem buscadas
+	//Variables to be used for login
 	static String userBuscado = "";
 	private String senhaBuscada = "";
 	
-	//método construtor cheio
+	//Constructor 
 	public BtnLoginControlador(JFrame fLogin, JTextField txtUser, JTextField txtSenha, JLabel lblLoginRegisterStatus) {
 		this.fLogin = fLogin;
 		this.lblLoginRegisterStatus = lblLoginRegisterStatus;
@@ -69,16 +30,13 @@ public class BtnLoginControlador implements ActionListener {
 		this.txtSenha = txtSenha;
 	}
 	
-	//ao clicar o botao:
 	public void actionPerformed(ActionEvent e) {
-		//crítica de dado
+		//Data critique
 		try {
-			//campo vazio
 			if(txtUser.getText().equals("")) {
 				JOptionPane.showMessageDialog(null, "insira um username");
 				return;
 			}
-			//campo vazio
 			if(txtSenha.getText().equals("")) {
 				JOptionPane.showMessageDialog(null, "insira uma senha");
 				return;
@@ -87,7 +45,7 @@ public class BtnLoginControlador implements ActionListener {
 			JOptionPane.showMessageDialog(null, erro);
 		}
 		
-		//verificar existencia de um login
+		//Check if user exists
 		try {
 			//if returns "" then login does not exist
 			//if it returns itself the if matches and login exists
@@ -120,8 +78,5 @@ public class BtnLoginControlador implements ActionListener {
 			e1.printStackTrace();
 			System.out.println(1);
 		}
-
-		
 	}
-
 }

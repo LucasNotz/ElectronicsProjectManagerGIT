@@ -8,7 +8,6 @@ import java.sql.SQLException;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JTextField;
 
 import login.Login;
 
@@ -17,11 +16,6 @@ public class btnConexaoTestControlador implements ActionListener {
 	static private JFrame fBanco = null;
 	static private JLabel lblConn = null;
 	static private JLabel lblConnStatus = null;
-	static private JTextField txtAddress = null;
-	static private JTextField txtPort= null;
-	static private JTextField txtBanco= null;
-	static private JTextField txtUser = null;
-	static private JTextField txtPassword = null;
 	
 	//Control variables
 	private int result = 0;
@@ -30,15 +24,10 @@ public class btnConexaoTestControlador implements ActionListener {
 	private Connection objConexaoTest = null;
 
 	//constructor
-	public btnConexaoTestControlador(JFrame fBanco, JLabel lblConnStatus, JLabel lblConn, JTextField txtAddress, JTextField txtPort, JTextField txtBanco, JTextField txtUser, JTextField txtPassword) {
+	public btnConexaoTestControlador(JFrame fBanco, JLabel lblConnStatus, JLabel lblConn) {
 		btnConexaoTestControlador.fBanco = fBanco;
 		btnConexaoTestControlador.lblConnStatus = lblConnStatus;
 		btnConexaoTestControlador.lblConn = lblConn;
-		btnConexaoTestControlador.txtAddress = txtAddress;
-		btnConexaoTestControlador.txtPort = txtPort;
-		btnConexaoTestControlador.txtBanco = txtBanco;
-		btnConexaoTestControlador.txtUser = txtUser;
-		btnConexaoTestControlador.txtPassword = txtPassword;
 	}
 
 	public void actionPerformed(ActionEvent e) {

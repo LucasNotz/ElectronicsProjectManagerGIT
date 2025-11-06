@@ -110,6 +110,7 @@ public class Database {
 	private JButton btnRefreshConnDefault = new JButton("Refresh Connection");
 	
 	//GUI constructor function
+	@SuppressWarnings("static-access")
 	public Database(){
 		//////////////////////////////////////////////////////////////Beginning of basic element configuration
 		
@@ -454,7 +455,7 @@ public class Database {
 		btnCon.setBounds(230, 180, 150,20);
 		pn.add(btnCon);
 		//check connection, attribute new value to lblConn and goes to new page if all works out
-		btnCon.addActionListener(new btnConexaoTestControlador(fBanco, lblConnStatus, lblCon, txtAddress, txtPort, txtBanco, txtUser, txtPassword));
+		btnCon.addActionListener(new btnConexaoTestControlador(fBanco, lblConnStatus, lblCon));
 		
 		//connection format label
 		lblConFormato.setBounds(50,370,900,20);

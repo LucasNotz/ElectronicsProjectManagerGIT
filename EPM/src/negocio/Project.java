@@ -1,22 +1,17 @@
 package negocio;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 import persistencia.ProjectDAO;
 
-
 public class Project {
-	
-	//propriedades da classe
-	
+	//Class variables
 	private String nome = "";
 	private double orcamento = 0;
 	private String[] parts = {};
 	private String user = "";
 	
-	//métodos construtores
-	
+	//Constructor function
 	public Project() {
 		super();
 	}
@@ -29,16 +24,15 @@ public class Project {
 		this.user = user;
 	}
 
-	//métodos de acesso 
-	
+	//Access functions
 	public String getNome() {
 		return nome;
 	}
-
+	
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-
+	
 	public double getOrcamento() {
 		return orcamento;
 	}
@@ -63,23 +57,23 @@ public class Project {
 		this.parts[i] = part;
 	}
 
-	//métodos da classe
+	//Class functions
 	
-	//persistir a ser adicionado
-	
+	//Get project info from database for specific 
 	public static String select(String user,int i, int j) throws Exception {
 		ProjectDAO DAOSelect = new ProjectDAO();
 		String[][] projectData = DAOSelect.select(user);
 		return projectData[i][j];
 	}
 
-	
+	//Get project amount for a specific user
 	public static int getProjectSize(String user) throws Exception {
 		ProjectDAO DAOSelect2 = new ProjectDAO();
 		int i = DAOSelect2.howManyProjects(user);
 		return i;
 	}
 	
+	//delete project from database (all projects have to have unique names)
 	public static void deleteProjeto(String projectName) throws Exception {
 		ProjectDAO DAOdelete = new ProjectDAO();
 		DAOdelete.deleteProject(projectName);
@@ -89,9 +83,7 @@ public class Project {
 		ProjectDAO DAOget = new ProjectDAO();
 		ArrayList<Object> data = new ArrayList<Object>();
 		data = DAOget.getProjectInfo(projectName);
-		System.out.println(4);
+		System.out.println("Project: " + projectName + " was delete from database");
 		return data;
 	}
-	
-	
 }

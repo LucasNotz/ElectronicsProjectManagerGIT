@@ -19,17 +19,23 @@ import javax.swing.JTextField;
 import persistencia.Database;
 
 public class Login {
+	//Class variables
 	
-	//propriedades da classe
-	private static JFrame fLogin = new JFrame(); //Frame
-	private JPanel pn = new JPanel(); //Painel
-	private JLabel lblTitulo = new JLabel("Projeto HUB"); //Título
+	//Connection testing variables
+	private static Connection objConexaoTestLogin = null;
+	private static int result = 0;
+	private static String defaultConn = ""; //get from default connection.txt
+	
+	//Frame, panel and title
+	private static JFrame fLogin = new JFrame(); //Making this static makes life easier
+	private JPanel pn = new JPanel(); 
+	private JLabel lblTitulo = new JLabel("Projeto HUB");
 	
 	//User Variables
 	private JLabel lblUser = new JLabel("Username: ");
 	private JTextField txtUser = new JTextField();
 	
-	//Password Varibles
+	//Password Variables
 	private JLabel lblSenha = new JLabel("Senha: ");
 	private JTextField txtSenha = new JTextField();
 	
@@ -43,79 +49,86 @@ public class Login {
 	//login status
 	private JLabel lblLoginRegisterStatus = new JLabel("");
 	
-	//flogin frame getters and setters (allows access when setting frame to visible)
+	//Flogin frame getters and setters (allows access when setting frame to visible)
 	public JFrame getfLogin() {
 		return fLogin;
 	}
 
-
+	@SuppressWarnings("static-access")
 	public void setfLogin(JFrame fLogin) {
 		this.fLogin = fLogin;
 	}
 	
 	//main method, whole program starts here
-	private static Connection objConexaoTestLogin = null;
-	private static int result = 0;
-	private static String defaultConn = ""; //get from default connection.txt
-	
 	public static void main(String[] args) {
+		//create login gui
 		new Login();
 		Login.fLogin.setVisible(true);
+		
+		//defines file as 'default connection.txt'
 		File file = new File("default connection.txt");
-
+		
+		//defaultConn holds default connection value saved
 		try (Scanner myReader = new Scanner(file)){
 				defaultConn = myReader.nextLine();
-
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
-		////////////////////////////////////////
+		
+		//Try to connect using defaultConn and if connection succeeds, then allow normal flow of program + control mechanism
 		try {
-			System.out.println(defaultConn);
+			System.out.println("Default connection to be tested: " + defaultConn);
+			
+			//test connection
 			objConexaoTestLogin = DriverManager.getConnection(defaultConn);
 			result++;
 			objConexaoTestLogin.close();
-			System.out.println(defaultConn + "burh");
+			
+			System.out.println("Default connection closed: " +defaultConn);
+			
+			//set lblCon (value used to connect) to defaultconn
 			Database.setLblCon(new JLabel(defaultConn));
 		} catch (Exception ex1) {
 			ex1.printStackTrace();
 		} 
 
-		//define resultados para campo de verificacao de conexao
+		System.out.println("Default connection test results: " + result);
+		
+		//Define actions for test results
 		if (result == 0) {
+			//Connection failed 
+			
+			//Go to database configuration frame
 			JOptionPane.showMessageDialog(null, "Connection cannot be established");
-			System.out.println(defaultConn);
+			System.out.println("Database connection failed on: " + defaultConn);
 			fLogin.setVisible(false);
 			new Database().getfBanco().setVisible(true);
 		} else {
-			JOptionPane.showMessageDialog(null, "Connected to database");
-			//conexao bem sucedia ->tela de login
+			//Connection worked: stay on login frame
 		}
 	}
 	
-	//Construtor do GUI de login
+	//Constructor
+	@SuppressWarnings({ "static-access"})
 	public Login() {
-		
-		//frame config
+		//Frame configuration
 		getfLogin().setTitle("Login do Projeto HUB");
 		getfLogin().setSize(1200,800);
 		getfLogin().setResizable(false);
-		getfLogin().setDefaultCloseOperation(getfLogin().EXIT_ON_CLOSE);
+		getfLogin().setDefaultCloseOperation(fLogin.EXIT_ON_CLOSE);
 		getfLogin().setLocationRelativeTo(null);
 		
-		
-		
-		//panel config
+		//Panel configuration
 		pn.setLayout(null);
 		pn.setBackground(Color.white);
 		getfLogin().add(pn);
 		
-		//titulo config
+		//Title configuration
 		lblTitulo.setBounds(440,60,400,65);
 		lblTitulo.setFont(new Font("Serif", Font.BOLD, 50));
 		pn.add(lblTitulo);
 		
-		//username config
+		//User configuration
 		lblUser.setBounds(200, 200, 200, 40);
 		lblUser.setFont(new Font("Serif", Font.PLAIN, 35));
 		pn.add(lblUser);
@@ -124,7 +137,7 @@ public class Login {
 		txtUser.setFont(new Font("Serif", Font.PLAIN, 35));
 		pn.add(txtUser);
 		
-		//password config
+		//Password configuration
 		lblSenha.setBounds(240, 300, 150, 40);
 		lblSenha.setFont(new Font("Serif", Font.PLAIN, 35));
 		pn.add(lblSenha);
@@ -133,46 +146,46 @@ public class Login {
 		txtSenha.setFont(new Font("Serif", Font.PLAIN, 35));
 		pn.add(txtSenha);
 		
-		//button login config
+		//Login button configuration
 		btnLogin.setBounds(130, 450, 200, 60);
 		btnLogin.setFont(new Font("Serif", Font.PLAIN, 35));
 		pn.add(btnLogin);
 		
-		//button register config
+		//Register button configuration
 		btnRegistrar.setBounds(380, 450, 200, 60);
 		btnRegistrar.setFont(new Font("Serif", Font.PLAIN, 35));
 		pn.add(btnRegistrar);
 	
-		//button limpar config
+		//Clear fields button configuration
 		btnLimpar.setBounds(630, 450, 200, 60);
 		btnLimpar.setFont(new Font("Serif", Font.PLAIN, 35));
 		pn.add(btnLimpar);
 		
-		//button sair config
+		//Exit button configuration
 		btnSair.setBounds(880, 450, 200, 60);
 		btnSair.setFont(new Font("Serif", Font.PLAIN, 35));
 		pn.add(btnSair);
 		
-		//status labels
+		//Status labels configuration
 		lblLoginRegisterStatus.setBounds(580,350,400,60);
 		lblLoginRegisterStatus.setFont(new Font("Serif", Font.PLAIN, 25));
 		pn.add(lblLoginRegisterStatus);
 		
-		//Button controllers
+		//Button controllers configuration
 		//Login button references controller class
 		btnLogin.addActionListener(new BtnLoginControlador(getfLogin(), txtUser, txtSenha, lblLoginRegisterStatus));
 		
 		//Register button references controller class
 		btnRegistrar.addActionListener(new BtnRegistrarControlador(txtUser, txtSenha, lblLoginRegisterStatus));
 		
-		//Sair button 
+		//Exit button 
 		btnSair.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.exit(0);
 			}
 		});
 		
-		//Lipar button
+		//Clean fields button
 		btnLimpar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				txtUser.setText("");
@@ -180,7 +193,7 @@ public class Login {
 			}
 		});
 		
-		//database setting btn
+		//Database settings button
 		btnDatabase.setBounds(800,700,200,20);
 		btnDatabase.setFont(new Font("Serif", Font.BOLD, 15));
 		pn.add(btnDatabase);
@@ -193,8 +206,4 @@ public class Login {
 		});
 	}
 
-
-
-
-	
 }
