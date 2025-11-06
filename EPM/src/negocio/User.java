@@ -1,7 +1,6 @@
 package negocio;
 
-import persistencia.UserDAOInsert;
-import persistencia.UserDAOSelect;
+import persistencia.UserDAO;
 
 /**
  * Essa classe é a User
@@ -63,7 +62,7 @@ public class User {
 	//resgatar credenciais do banco de dados
 	
 	public static String resgatar(String username, int i) throws Exception {
-		UserDAOSelect selectDAO = new UserDAOSelect();	
+		UserDAO selectDAO = new UserDAO();	
 		String[] credenciais = selectDAO.select(username);
 		
 		return credenciais[i];
@@ -72,7 +71,7 @@ public class User {
 	//registrar no bd
 	
 	public void persistir() throws Exception{
-		new UserDAOInsert().insert(this);
+		new UserDAO().insert(this);
 	}
 	
 	
