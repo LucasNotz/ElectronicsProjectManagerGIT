@@ -6,7 +6,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.ArrayList;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
@@ -21,41 +20,53 @@ import javax.swing.JTextArea;
 
 import apresentacao.project.ProjectMenu;
 import negocio.Part;
-//copiei e colei pq tinha collocado um elemento errado mas decidi deixar mas nao via ser assim
 public class PartMenu {
-	//propriedades da classe
-	private JFrame fPartMenu = new JFrame();
+	//Class variables
+	
+	//Frame and panel
+	private static JFrame fPartMenu = new JFrame(); 
 	private JPanel pn = new JPanel();
-	private JLabel lblTitulo = new JLabel("Logged in as: ");
+	
+	//User
 	private JLabel lblTituloUser = new JLabel("Temporary");
-	private JLabel lblProjeto = new JLabel("Partes");
+	
+	//Fixed labels
+	private JLabel lblTitulo = new JLabel("Logged in as: ");
+	private JLabel lblPart= new JLabel("Partes");
+	
+	//Top menu 
 	private JMenuBar barraMenu = new JMenuBar();
 	private JMenu menuOpcao = new JMenu("Navegar");
-	private JMenuItem menuItem = new JMenuItem("Menu Partes");
-	private JMenuItem menuItem2 = new JMenuItem("Menu Projetos");
+	private JMenuItem menuItemPa = new JMenuItem("Menu Partes");
+	private JMenuItem menuItemPr = new JMenuItem("Menu Projetos");
+	
+	//Parts
 	private DefaultListModel<String> lstModelParts = new DefaultListModel<String>();
 	private JList<String> lstParts = new JList<String>();;
 	private JScrollPane jspParts = new JScrollPane(lstParts);
+	
+	//Part preview
 	private JLabel lblPreview = new JLabel("Preview");
 	private JTextArea aPreview = new JTextArea();
-	private JScrollPane jspPreview = new JScrollPane(aPreview, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-
-
+	private JScrollPane jspPreview = new JScrollPane(aPreview, 
+			JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 	
+	@SuppressWarnings({ "static-access" })
 	public PartMenu(String user) {
-		//frame config
+		//Frame configuration
 		fPartMenu.setTitle("Menu Projetos");
 		fPartMenu.setSize(1200,800);
 		fPartMenu.setResizable(false);
 		fPartMenu.setDefaultCloseOperation(fPartMenu.EXIT_ON_CLOSE);
 		fPartMenu.setLocationRelativeTo(null);
 	
+		//Top menu configuration
 		fPartMenu.setJMenuBar(barraMenu);
 		barraMenu.add(menuOpcao);
-		menuOpcao.add(menuItem); //a ser ativado
-		menuOpcao.add(menuItem2); //inativo por agora
+		menuOpcao.add(menuItemPa); 
+		menuOpcao.add(menuItemPr); 
 		
-		menuItem2.addActionListener(new ActionListener() {
+		menuItemPr.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					new ProjectMenu(user).fProjectMenu().setVisible(true);
@@ -66,23 +77,28 @@ public class PartMenu {
 			}
 		});
 		
+		//Panel configuration
 		pn.setLayout(null);
 		pn.setBackground(Color.white);
 		fPartMenu.add(pn);
 		
+		//Title configuration
 		lblTitulo.setBounds(320,40,300,65);
 		lblTitulo.setFont(new Font("Serif", Font.BOLD, 40));
 		pn.add(lblTitulo);
 		
+		//User title configuration
 		lblTituloUser.setText(user);
 		lblTituloUser.setBounds(620,40,500,65);
 		lblTituloUser.setFont(new Font("Serif", Font.BOLD, 40));
 		pn.add(lblTituloUser);
 		
-		lblProjeto.setBounds(150, 150, 200, 45);
-		lblProjeto.setFont(new Font("Serif", Font.PLAIN, 30));
-		pn.add(lblProjeto);		
+		//Part label configuration
+		lblPart.setBounds(150, 150, 200, 45);
+		lblPart.setFont(new Font("Serif", Font.PLAIN, 30));
+		pn.add(lblPart);		
 		
+		//Show all parts on list
 		String[][] data = null;
 		try {
 			data = Part.getAllParts();
@@ -105,6 +121,7 @@ public class PartMenu {
 		jspParts.setBounds(150, 200, 400, 250);
 		pn.add(jspParts);
 		
+		//Show part description on click
 		lstParts.addMouseListener(new MouseListener() {
 			public void mouseClicked(MouseEvent e) {
 				System.out.println(1);
@@ -127,25 +144,21 @@ public class PartMenu {
 			
 		});
 		
+		//Preview configuration
 		lblPreview.setBounds(150,500, 300,40);
 		lblPreview.setFont(new Font("Serif", Font.ITALIC, 30));
 		pn.add(lblPreview);
 		
+		//Part preview 
 		aPreview.setLineWrap(true);
 		aPreview.setEditable(false);
 		jspPreview.setBounds(150,550,900,150);
 		pn.add(jspPreview);
-		
-
 	}
 
-	//métodos de accesso
+	//Access functions
 	public JFrame fPartMenu() {
 		return fPartMenu;
-	}
-
-	public void setfPartMenu(JFrame fPartMenu) {
-		this.fPartMenu = fPartMenu;
 	}
 }
 

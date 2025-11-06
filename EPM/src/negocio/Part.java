@@ -6,22 +6,6 @@ import java.util.Collection;
 
 import persistencia.PartDAO;
 
-/**
- * Essa classe é a Part
- *  - Modelo para as partes 
- *  - Overview
- *  	
- *  Propriedades
- *  
- *  Metodos construtores
- *  
- *  Metodos de acesso
- *  
- *  Metodos da classe
- *  
- *  	getTodos()
- */
-
 public class Part {
 	
 	//propriedade da classe
