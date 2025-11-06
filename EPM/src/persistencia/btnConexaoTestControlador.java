@@ -13,8 +13,7 @@ import javax.swing.JTextField;
 import login.Login;
 
 public class btnConexaoTestControlador implements ActionListener {
-	
-	//propriedades da classe
+	//Class variables
 	static private JFrame fBanco = null;
 	static private JLabel lblConn = null;
 	static private JLabel lblConnStatus = null;
@@ -24,17 +23,13 @@ public class btnConexaoTestControlador implements ActionListener {
 	static private JTextField txtUser = null;
 	static private JTextField txtPassword = null;
 	
-	//variavel de controle
+	//Control variables
 	private int result = 0;
 	
-	//propriedade da classe connection testing
+	//Connection testing variables
 	private Connection objConexaoTest = null;
-	
-	
-	
-	//construtor
-	
 
+	//constructor
 	public btnConexaoTestControlador(JFrame fBanco, JLabel lblConnStatus, JLabel lblConn, JTextField txtAddress, JTextField txtPort, JTextField txtBanco, JTextField txtUser, JTextField txtPassword) {
 		btnConexaoTestControlador.fBanco = fBanco;
 		btnConexaoTestControlador.lblConnStatus = lblConnStatus;
@@ -46,9 +41,8 @@ public class btnConexaoTestControlador implements ActionListener {
 		btnConexaoTestControlador.txtPassword = txtPassword;
 	}
 
-	//evento do butao pressionado
 	public void actionPerformed(ActionEvent e) {
-		//verifica conexao
+		//Test Connection
 		try {
 			objConexaoTest = DriverManager.getConnection(lblConn.getText());
 			System.out.println("Connection can be established");
@@ -57,24 +51,24 @@ public class btnConexaoTestControlador implements ActionListener {
 			ex1.printStackTrace();
 		} 
 
-		//define resultados para campo de verificacao de conexao
+		//IF ELSE (connection can be established)
 		if (result == 0) {
+			//Connection failed
 			lblConnStatus.setText("Connection cannot be established");
 			lblConnStatus.setForeground(Color.red);
 		} else {
-			lblConnStatus.setText("Connection can be established");
-			lblConnStatus.setForeground(Color.green);
-			//conexao bem sucedia ->tela de login
+			//Connection can be established 
+			//Change visible frames
 			new Login().getfLogin().setVisible(true);
+			fBanco.setVisible(false);
 			try {
+				//Close test connection
 				objConexaoTest.close();
 			} catch (SQLException e1) {
 				e1.printStackTrace();
 			}
-			fBanco.setVisible(false);
-			
 		}
+		//Reset control variable
 		result = 0;
-
 	}	
 }

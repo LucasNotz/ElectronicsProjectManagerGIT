@@ -76,7 +76,7 @@ public class Login {
 			result++;
 			objConexaoTestLogin.close();
 			System.out.println(defaultConn + "burh");
-			Database.setLblConn(new JLabel(defaultConn));
+			Database.setLblCon(new JLabel(defaultConn));
 		} catch (Exception ex1) {
 			ex1.printStackTrace();
 		} 

@@ -129,14 +129,31 @@ public class ProjectDAO {
 		//Connect to database
 		objBanco.conectar();
 		
-		//Prepare SQL statement
+		//Prepare 1st SQL statement : delete all instances of PR_name from PR_PA to
+		// 							  resolve foreign key inconsistency 
+		
+		objExecucao = objBanco.getObjConexao().prepareStatement(
+				"delete from PR_PA where PR_name = ?");
+		
+		//Define 1st SQL statement parameter
+		objExecucao.setString(1, projectName.strip());
+		
+		//Try executing 1st statement
+		try {
+			objExecucao.executeQuery();
+		} catch (Exception e) {
+			//Error
+			e.printStackTrace();
+		}
+		
+		//Prepare 2nd SQL statement
 		objExecucao = objBanco.getObjConexao().prepareStatement(
 				"delete from PR_PROJECT where PR_name = ?");
 		
-		//Define statement parameters
+		//Define 2nd statement parameters
 		objExecucao.setString(1, projectName.strip());
 		
-		//Try executing statement
+		//Try executing 2nd statement
 		try {
 			objExecucao.executeQuery();
 		} catch (Exception e) {
