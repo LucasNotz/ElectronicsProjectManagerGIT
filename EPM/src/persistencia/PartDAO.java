@@ -13,13 +13,21 @@ public class PartDAO {
 	public String[][] getAllParts() throws  Exception {
 		//Connect to database
 		objBanco.conectar();
-		
-		//Initialize return string ( = null instead of this will cause error)
-		String[][] info = new String[100][10];
-		
+
 		//Prepare SQL statement
 		objExecucao = objBanco.getObjConexao().prepareStatement(
 				"Select * from PA_PART");
+		
+		//Execute statement
+		objCursor = objExecucao.executeQuery();
+		
+		int j = 0;
+		while (objCursor.next()) {
+			j++;
+		}
+		
+		//Initialize return variable 
+		String[][] info = new String[j][10];
 		
 		//Execute statement
 		objCursor = objExecucao.executeQuery();
@@ -43,12 +51,22 @@ public class PartDAO {
 		//Connect
 		objBanco.conectar();
 		
-		//Initialize return variable ( = null will return error)
-		String[][] info = new String[100][10];
+
 		
 		//Prepare SQL Statement
 		objExecucao = objBanco.getObjConexao().prepareStatement(
 				"Select * from PA_PART");
+		
+		//Execute statement
+		objCursor = objExecucao.executeQuery();
+		
+		int j = 0;
+		while (objCursor.next()) {
+			j++;
+		}
+		
+		//Initialize return variable 
+		String[][] info = new String[j][10];
 		
 		//Execute statement
 		objCursor = objExecucao.executeQuery();

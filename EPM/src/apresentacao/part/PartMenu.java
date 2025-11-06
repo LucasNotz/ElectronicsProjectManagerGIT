@@ -8,6 +8,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 import javax.swing.DefaultListModel;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -50,6 +51,12 @@ public class PartMenu {
 	private JTextArea aPreview = new JTextArea();
 	private JScrollPane jspPreview = new JScrollPane(aPreview, 
 			JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+	
+	//Button variables
+	private JButton btnVer = new JButton("Ver");
+	private JButton btnAdicionar = new JButton("Adicionar");
+	private JButton btnMudar = new JButton("Alterar");
+	private JButton btnRemover = new JButton("Remover");
 	
 	@SuppressWarnings({ "static-access" })
 	public PartMenu(String user) {
@@ -108,9 +115,7 @@ public class PartMenu {
 		try {
 			int i = 0;
 			for(i = 0; i < data.length; i++ ) {
-
 				lstModelParts.add(i, data[i][0]);
-				
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -154,8 +159,30 @@ public class PartMenu {
 		aPreview.setEditable(false);
 		jspPreview.setBounds(150,550,900,150);
 		pn.add(jspPreview);
-	}
+		
+		//Button configuration
+		
+		//View button configuration
+		btnVer.setBounds(620,240,200,60);
+		btnVer.setFont(new Font("Serif", Font.PLAIN, 25));
+		pn.add(btnVer);
 
+		//Add button configuration
+		btnAdicionar.setBounds(850,240,200,60);
+		btnAdicionar.setFont(new Font("Serif", Font.PLAIN, 25));
+		pn.add(btnAdicionar);
+		
+		//Alter button configuration
+		btnMudar.setBounds(620,340,200,60);
+		btnMudar.setFont(new Font("Serif", Font.PLAIN, 25));
+		pn.add(btnMudar);
+		
+		//Remove button configuration
+		btnRemover.setBounds(850,340,200,60);
+		btnRemover.setFont(new Font("Serif", Font.PLAIN, 25));
+		pn.add(btnRemover);
+
+	}
 	//Access functions
 	public JFrame fPartMenu() {
 		return fPartMenu;

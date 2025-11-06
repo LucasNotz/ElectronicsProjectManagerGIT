@@ -134,6 +134,16 @@ public class ProjectMenu {
 		btnAdicionar.setBounds(380,420,200,60);
 		btnAdicionar.setFont(new Font("Serif", Font.PLAIN, 25));
 		pn.add(btnAdicionar);
+		btnAdicionar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					new ProjectMake(user).getJFrame().setVisible(true);;
+					fProjectMenu.setVisible(false);
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
 		
 		//Alter button configuration
 		btnMudar.setBounds(620,420,200,60);
