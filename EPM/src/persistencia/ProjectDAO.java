@@ -6,6 +6,8 @@ import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
+import negocio.Project;
+
 public class ProjectDAO {
 	//Class variables
 	private Database objBanco = new Database();
@@ -202,5 +204,34 @@ public class ProjectDAO {
 		
 		//Return
 		return info;
+	}
+	
+	public void insert(Project objProjeto) throws Exception {
+		objBanco.conectar();
+		
+		objExecucao = objBanco.getObjConexao().prepareStatement(
+				"insert into PR_PROJECT (PR_name, PR_budget, PR_description, PR_username) values (?,?,?,?)");
+		
+		objExecucao.setString(1, objProjeto.getNome());
+		objExecucao.setDouble(2, 0);
+		objExecucao.setString(3 , objProjeto.getDescricao());
+		objExecucao.setString(4, objProjeto.getUser());
+		
+		objExecucao.executeQuery();
+		objBanco.desconectar();
+	}
+	
+	public void insertParts(Object partName, String projectName, Object qtd) throws Exception {
+		objBanco.conectar();
+		
+		objExecucao = objBanco.getObjConexao().prepareStatement(
+				"insert into PR_PA (PR_name, PA_name, PR_PA_qnt) values (?,?,?)");
+		
+		objExecucao.setString(1, projectName);
+		objExecucao.setString(2, (String) partName);
+		objExecucao.setInt(3, (int) qtd);
+		
+		objExecucao.executeQuery();
+		objBanco.desconectar();
 	}
 }

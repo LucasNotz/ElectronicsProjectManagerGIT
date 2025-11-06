@@ -8,6 +8,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 import javax.swing.DefaultListModel;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -22,6 +23,7 @@ import javax.swing.JTextField;
 
 import apresentacao.part.PartMenu;
 import negocio.Part;
+import negocio.Project;
 
 public class ProjectMake {
 	//Class Variables
@@ -48,6 +50,10 @@ public class ProjectMake {
 	//Text field
 	private JTextField titulo = new JTextField();
 	private JTextField orcamento = new JTextField();
+	
+	//Button
+	private JButton btnSaveProject = new JButton("Adicionar projeto");
+	private JButton btnSaveParts = new JButton("Adicionar partes");
 	
 	//Description text area
 	private JTextArea descricao = new JTextArea();
@@ -198,7 +204,6 @@ public class ProjectMake {
 						    	if (qtdString.contains("[a-zA-Z]+") == false) {
 							    	int qtd = Integer.parseInt(qtdString);	
 						    		chosen[lstParts.getSelectedIndex()][2] = qtd + qtdExistente;
-						    		
 						    		dlmChosen.removeElementAt(i);;
 						    		
 									dlmChosen.add(i, "Part: " + chosen[i][0]
@@ -223,5 +228,42 @@ public class ProjectMake {
 			public void mouseExited(MouseEvent e) {
 			}
 		});
+		
+		btnSaveProject.setBounds(850,50,200,40);
+		btnSaveProject.setFont(new Font("Serif", Font.BOLD, 25));
+		pn.add(btnSaveProject);
+		
+		btnSaveProject.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Project objProject = new Project();
+				objProject.setNome(titulo.getText());
+				objProject.setOrcamento(0);
+				objProject.setDescricao(descricao.getText());
+				objProject.setUser(user);
+
+				try {
+					Project.insertProject(objProject);
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+				
+			}
+		});
+		
+		btnSaveParts.setBounds(850,260,200,40);
+		btnSaveParts.setFont(new Font("Serif", Font.BOLD, 25));
+		pn.add(btnSaveParts);
+		btnSaveParts.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				for (int i = 0; i < dlmChosen.getSize(); i++) {
+					try {
+						Project.insertPart(chosen[i][0], titulo.getText(), chosen[i][2]);
+					} catch (Exception e1) {
+						e1.printStackTrace();
+					}
+				}
+			}	
+		});
+			
 	}
 }

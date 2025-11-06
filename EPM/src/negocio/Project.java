@@ -8,7 +8,7 @@ public class Project {
 	//Class variables
 	private String nome = "";
 	private double orcamento = 0;
-	private String[] parts = {};
+	private String descricao = "";
 	private String user = "";
 	
 	//Constructor function
@@ -16,12 +16,20 @@ public class Project {
 		super();
 	}
 
-	public Project(String nome, double orcamento, String[] parts, String user) {
+	public Project(String nome, double orcamento, String descricao, String user) {
 		super();
+		this.descricao = descricao;
 		this.nome = nome;
 		this.orcamento = orcamento;
-		this.parts = parts;
 		this.user = user;
+	}
+
+	public String getDescricao() {
+		return descricao;
+	}
+
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
 	}
 
 	//Access functions
@@ -47,14 +55,6 @@ public class Project {
 
 	public void setUser(String user) {
 		this.user = user;
-	}
-
-	public String getPart(int i) {
-		return this.parts[i];
-	}
-	
-	public void setPart(String part, int i) {
-		this.parts[i] = part;
 	}
 
 	//Class functions
@@ -86,4 +86,15 @@ public class Project {
 		System.out.println("Project: " + projectName + " was delete from database");
 		return data;
 	}
+	
+	public static void insertProject(Project projeto) throws Exception {
+		ProjectDAO DAOinsert = new ProjectDAO();
+		DAOinsert.insert(projeto);
+	}
+	
+	public static void insertPart(Object partName, String projectName,  Object qtd) throws Exception {
+		ProjectDAO DAOinsert2 = new ProjectDAO();
+		DAOinsert2.insertParts(partName, projectName, qtd);
+	}
+	
 }
